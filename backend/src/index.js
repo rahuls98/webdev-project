@@ -2,8 +2,15 @@ import express from "express";
 import cors from "cors";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-
 dotenv.config();
+
+import ExpertModel from "./models/Expert.js";
+import PostModel from "./models/Post.js";
+import SessionModel from "./models/Session.js";
+import TopicModel from "./models/Topic.js";
+import UserModel from "./models/User.js";
+import UserFollowingExpertModel from "./models/UserFollowingExpert.js";
+import UserFollowingTopicModel from "./models/UserFollowingTopic.js";
 
 const PORT = 8000;
 const server = express();

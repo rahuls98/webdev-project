@@ -21,6 +21,7 @@ const MainLayout = (props) => {
                 </Grid>
                 <Grid item lg={10}>
                     <Navbar />
+                    {props.children}
                 </Grid>
             </Grid>
         </div>

@@ -1,0 +1,19 @@
+.FeedTrending_container {
+    width: -webkit-fill-available;
+    margin: 0 10px 0 10px;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: var(--box-shadow);
+    position: fixed;
+}
+
+.FeedTrending_header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.FeedTrending_header span {
+    margin-right: 5px;
+}

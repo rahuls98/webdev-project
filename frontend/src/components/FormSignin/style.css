@@ -1,0 +1,21 @@
+.FormSignin_forgotpassword_container {
+    text-align: right;
+}
+
+.FormSignin_signup_container {
+    text-align: center;
+}
+
+.FormSignin_signup_option {
+    text-decoration: underline;
+}
+
+.FormSignin_signup_option:hover {
+    color: var(--text-highlight);
+    cursor: pointer;
+}
+
+.FormSignin_container .MuiFormHelperText-root {
+    margin: 0;
+    background: var(--background);
+}

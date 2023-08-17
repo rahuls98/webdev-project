@@ -5,6 +5,8 @@ import Sessions from "./pages/Sessions";
 import Following from "./pages/Following";
 import Saved from "./pages/Saved";
 import Explore from "./pages/Explore";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
 
 function App() {
     return (
@@ -12,6 +14,8 @@ function App() {
             <BrowserRouter>
                 <Routes>
                     <Route path="/" element={<Navigate to="/feed" />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/register" element={<Register />} />
                     <Route path="/feed" element={<Feed />} />
                     <Route path="/sessions" element={<Sessions />} />
                     <Route path="/following" element={<Following />} />

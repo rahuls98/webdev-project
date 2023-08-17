@@ -1,0 +1,8 @@
+.Sidebar_container {
+    height: 100vh;
+    width: 100%;
+    background: white;
+    box-shadow: var(--box-shadow);
+    box-sizing: border-box;
+    padding: 10px;
+}

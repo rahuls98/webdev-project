@@ -1,0 +1,12 @@
+.SidebarMenuItem_container .MuiListItemButton-root.Mui-selected {
+    box-shadow: var(--box-shadow);
+}
+
+.SidebarMenuItem_container .MuiSvgIcon-root {
+    text-align: left;
+}
+
+.SidebarMenuItem_title {
+    margin-left: 10px;
+    text-decoration: none;
+}

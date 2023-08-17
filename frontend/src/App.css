@@ -1,0 +1,17 @@
+:root {
+    --text-primary: #1f2b5b;
+    --text-highlight: #e24065;
+    --text-soft-highlight: #e24066da;
+    --text-grey-highlight: #8a8c92;
+    --lighter-primary: #1f2b5be0;
+    --box-shadow: 0 1px 3px #0000001f, 0 1px 2px #0000003d;
+    --background: rgb(246, 248, 250);
+}
+
+* {
+    color: var(--text-primary);
+}
+
+.App {
+    background-color: var(--background);
+}

@@ -5,10 +5,15 @@ import Stack from "@mui/material/Stack";
 import TopicChip from "../TopicChip";
 
 const FeedTrending = () => {
-    // eslint-disable-next-line
     const [trendingTopics, setTrendingTopics] = useState([]);
 
-    useEffect(() => {}, []);
+    useEffect(() => {
+        setTrendingTopics([
+            { _id: 1, title: "Topic 1" },
+            { _id: 2, title: "Topic 2" },
+            { _id: 3, title: "Topic 3" },
+        ]);
+    }, []);
 
     return (
         <div className="FeedTrending_container">

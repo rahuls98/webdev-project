@@ -1,7 +1,10 @@
 import express from "express";
 import cors from "cors";
 import mongoose from "mongoose";
+import authenticationRoutes from "./routes/authentication.js";
 import dotenv from "dotenv";
+import session from "express-session"
+
 dotenv.config();
 
 import ExpertModel from "./models/Expert.js";
@@ -24,8 +27,32 @@ mongoose
         console.log(err);
     });
 
-server.use(cors());
+server.use(cors({
+    credentials: true,
+    origin: process.env.FRONTEND_URL,
+}));
+
+const sessionOptions = {
+    secret: "any string",
+    resave: false,
+    saveUninitialized: false,
+};
+
+if (process.env.NODE_ENV !== "development") {
+    sessionOptions.proxy = true;
+    sessionOptions.cookie = {
+        sameSite: "none",
+        secure: true,
+    };
+}
+server.use(
+    session(sessionOptions)
+)
+
 server.use(express.json());
+
+
+server.use("/authentication", authenticationRoutes);
 
 server.get("/", (req, res) => {
     res.status(200).send("MediHub is live!");

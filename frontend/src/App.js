@@ -1,5 +1,5 @@
 import "./App.css";
-import {BrowserRouter, Routes, Route, Navigate} from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Feed from "./pages/Feed";
 import Sessions from "./pages/Sessions";
 import Following from "./pages/Following";
@@ -7,13 +7,21 @@ import Saved from "./pages/Saved";
 import Explore from "./pages/Explore";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import {configureStore} from '@reduxjs/toolkit';
-import {Provider} from "react-redux";
+import { configureStore } from "@reduxjs/toolkit";
+import { Provider } from "react-redux";
 import authReducer from "./reducers/auth-reducer";
 import AdminVerifyFeed from "./pages/AdminVerifyFeed";
+import navigationReducer from "./reducers/navigation-reducer";
+import unverifiedExpertReducer from "./reducers/unverified-experts-reducer";
 
-const store = configureStore(
-    {reducer: {user:  authReducer}});
+const store = configureStore({
+    reducer: {
+        user: authReducer,
+        page: navigationReducer,
+        unverifiedExperts : unverifiedExpertReducer
+    },
+});
+
 function App() {
     return (
         <Provider store={store}>

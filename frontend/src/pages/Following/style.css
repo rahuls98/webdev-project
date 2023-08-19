@@ -1,0 +1,25 @@
+.FollowingLayoutContent_container {
+    height: calc(100vh - 70px);
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.FollowingLayoutContent_container::-webkit-scrollbar {
+    display: none;
+}
+
+.FollowingLayoutContent_container .MuiTabs-root {
+    margin: 0 24px 0 24px;
+}
+
+.FollowingLayoutContent_container .MuiTab-root {
+    text-transform: capitalize;
+}
+
+.FollowingLayoutContent_container .MuiTab-root.Mui-selected {
+    color: var(--text-highlight);
+}
+
+.FollowingLayoutContent_container .MuiTabs-indicator {
+    background-color: var(--text-highlight);
+}

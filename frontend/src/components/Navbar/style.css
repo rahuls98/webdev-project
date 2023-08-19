@@ -7,7 +7,7 @@
     box-sizing: border-box;
     justify-content: space-between;
     padding: 0 20px 0 20px;
-    border-bottom: rgba(0,0,0,0.12) solid 1px;
+    border-bottom: rgba(0, 0, 0, 0.12) solid 1px;
 }
 
 .Navbar_left {
@@ -16,4 +16,9 @@
 
 .Navbar_right {
     display: flex;
+}
+
+.MuiButton-root.Joy-disabled {
+    background: var(--text-grey-highlight);
+    color: white;
 }

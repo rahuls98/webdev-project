@@ -1,10 +1,10 @@
 import "./style.css";
 import SidebarMenu from "../SidebarMenu";
 
-const Sidebar = (props) => {
+const Sidebar = () => {
     return (
         <div className="Sidebar_container">
-            <SidebarMenu selected={props.selected} />
+            <SidebarMenu />
         </div>
     );
 };

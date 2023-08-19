@@ -22,7 +22,7 @@ const SidebarMenu = (props) => {
                     },
                 }}
             >
-                {(currentUser === undefined || currentUser === null) ?
+                {/*{ (currentUser === undefined || currentUser === null) ?*/}
                     <div>
                         <Link to="/login" style={{textDecoration: "none"}}>
                             <SidebarMenuItem
@@ -39,8 +39,8 @@ const SidebarMenu = (props) => {
                             />
                         </Link>
                     </div>
-                    :
-                    <div>
+                    {/*:*/}
+                    {/*<div>*/}
                         <Link to="/feed" style={{textDecoration: "none"}}>
                             <SidebarMenuItem
                                 itemIcon={<DynamicFeedIcon/>}
@@ -76,7 +76,16 @@ const SidebarMenu = (props) => {
                                 selected={props.selected === 4}
                             />
                         </Link>
-                    </div>}
+                        {/*{currentUser.role === 'Admin'  ?*/}
+                        <Link to="/adminVerifyFeed" style={{textDecoration: "none"}}>
+                            <SidebarMenuItem
+                                itemIcon={<SearchOutlinedIcon/>}
+                                itemTitle="Admin Verify"
+                                selected={props.selected === 5}
+                            />
+                        </Link>
+                        {/*</Link> : <div></div>}*/}
+                    {/*</div>}*/}
             </List>
         </div>
     )

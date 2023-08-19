@@ -10,6 +10,7 @@ import Register from "./pages/Register";
 import {configureStore} from '@reduxjs/toolkit';
 import {Provider} from "react-redux";
 import authReducer from "./reducers/auth-reducer";
+import AdminVerifyFeed from "./pages/AdminVerifyFeed";
 
 const store = configureStore(
     {reducer: {user:  authReducer}});
@@ -23,6 +24,7 @@ function App() {
                         <Route path="/login" element={<Login/>}/>
                         <Route path="/register" element={<Register/>}/>
                         <Route path="/feed" element={<Feed/>}/>
+                        <Route path="/adminVerifyFeed" element={<AdminVerifyFeed/>}/>
                         <Route path="/sessions" element={<Sessions/>}/>
                         <Route path="/following" element={<Following/>}/>
                         <Route path="/saved" element={<Saved/>}/>

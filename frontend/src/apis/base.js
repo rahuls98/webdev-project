@@ -6,8 +6,7 @@ const get = async (url) => {
     const options = {
         method: "GET",
         headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${userUtils.getBearerToken()}`,
+            "Content-Type": "application/json"
         },
     };
     try {
@@ -26,11 +25,6 @@ const post = async (url, data, withToken = true) => {
         },
         body: JSON.stringify(data),
     };
-    if (withToken) {
-        options.headers[
-            "Authorization"
-        ] = `Bearer ${userUtils.getBearerToken()}`;
-    }
     try {
         const response = await fetch(BASE_URL + url, options);
         return response.json();
@@ -43,8 +37,7 @@ const del = async (url, data) => {
     const options = {
         method: "DELETE",
         headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${userUtils.getBearerToken()}`,
+            "Content-Type": "application/json"
         },
         body: JSON.stringify(data),
     };
@@ -60,8 +53,7 @@ const put = async (url, data) => {
     const options = {
         method: "PUT",
         headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${userUtils.getBearerToken()}`,
+            "Content-Type": "application/json"
         },
         body: JSON.stringify(data),
     };

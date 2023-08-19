@@ -2,18 +2,14 @@ import requestMethods from "./base";
 import userUtils from "../utils/user";
 
 const createSession = async (data) => {
-    const userId = userUtils.getPangeaId();
-    data["author"] = userId;
     return await requestMethods.post("/session/", data);
 };
 
-const getAllSessions = async () => {
-    const userId = userUtils.getPangeaId();
+const getAllSessions = async (userId) => {
     return await requestMethods.get(`/session?user=${userId}`);
 };
 
-const getEnrolledSessions = async () => {
-    const userId = userUtils.getPangeaId();
+const getEnrolledSessions = async (userId) => {
     const enrolledSessions = await requestMethods.get(
         `/session/enrolled?user=${userId}`
     );
@@ -21,14 +17,10 @@ const getEnrolledSessions = async () => {
 };
 
 const enrollInSession = async (data) => {
-    const userId = userUtils.getPangeaId();
-    data["user"] = userId;
     return await requestMethods.put("/session/enroll/", data);
 };
 
 const unenrollInSession = async (data) => {
-    const userId = userUtils.getPangeaId();
-    data["user"] = userId;
     return await requestMethods.put("/session/unenroll/", data);
 };
 

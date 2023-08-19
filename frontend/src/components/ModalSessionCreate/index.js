@@ -45,8 +45,9 @@ const ModalSessionCreate = () => {
             date: dateString,
             time: timeString,
             topics,
+            author: currentUser._id
         };
-        // await sessionApis.createSession(sessionData);
+         await sessionApis.createSession(sessionData);
         setModalOpen(false);
     };
 

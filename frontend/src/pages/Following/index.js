@@ -45,18 +45,18 @@ const Following = () => {
         setTab(newValue);
     };
 
-    // useEffect(() => {
-    //     const getFollowingExperts = async () => {
-    //         const experts = await followingApis.getFollowingExperts();
-    //         setExperts(experts);
-    //     }
-    //     const getFollowingTopics = async () => {
-    //         const topics = await followingApis.getFollowingTopics();
-    //         setTopics(topics);
-    //     }
-    //     getFollowingExperts();
-    //     getFollowingTopics();
-    // }, []);
+    useEffect(() => {
+        const getFollowingExperts = async () => {
+            const experts = await followingApis.getFollowingExperts(currentUser._id);
+            setExperts(experts);
+        }
+        const getFollowingTopics = async () => {
+            const topics = await followingApis.getFollowingTopics(currentUser._id);
+            setTopics(topics);
+        }
+        getFollowingExperts();
+        getFollowingTopics();
+    }, []);
 
     return (
         <div className="Following_container">

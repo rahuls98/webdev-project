@@ -1,8 +1,6 @@
 import requestMethods from "./base";
-import userUtils from "../utils/user";
 
-const getUserFeed = async () => {
-    const userId = userUtils.getPangeaId();
+const getUserFeed = async (userId) => {
     return await requestMethods.get(`/feed/${userId}`);
 };
 

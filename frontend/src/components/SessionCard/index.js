@@ -42,11 +42,11 @@ const SessionCard = (props) => {
     };
 
     const handleUnenrollmentClick = async () => {
-        // await sessionApis.unenrollInSession({session: props.session._id});
+         await sessionApis.unenrollInSession({session: props.session._id , user : currentUser._id});
     };
 
     const handleSessionDoneClick = async () => {
-        // await sessionApis.markSessionComplete({session: props.session._id});
+         await sessionApis.markSessionComplete({session: props.session._id});
     };
 
     const handleJoinClick = async () => {

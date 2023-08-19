@@ -11,18 +11,21 @@ import EventIcon from "@mui/icons-material/Event";
 import TopicChip from "../TopicChip";
 import datetimeUtils from "../../utils/datetime";
 import Avatar from "@mui/material/Avatar";
+import {useSelector} from "react-redux";
+import sessionApis from "../../apis/session";
 
 const FeedSession = (props) => {
     // eslint-disable-next-line
     const [enrolled, setEnrolled] = useState(props.enrolled);
     const [enrolledSnackbar, setEnrolledSnackbar] = useState(false);
+    const {currentUser} = useSelector((state) => state.user);
 
     const handleEnrollOnClick = async () => {
         if (!enrolled) {
             setEnrolledSnackbar(true);
-            // await sessionApis.enrollInSession({ session: props.session._id });
+             await sessionApis.enrollInSession({ session: props.session._id  , user: currentUser._id});
         } else {
-            // await sessionApis.unenrollInSession({ session: props.session._id });
+             await sessionApis.unenrollInSession({ session: props.session._id , user: currentUser._id});
         }
         setEnrolled(!enrolled);
     };

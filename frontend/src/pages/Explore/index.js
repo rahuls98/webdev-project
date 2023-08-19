@@ -82,39 +82,39 @@ const Explore = () => {
         setTab(newValue);
     };
 
-    // useEffect(() => {
-    //     if (props.searchString !== "") {
-    //         const search = async () => {
-    //             const searchResult = await feedApis.search(props.searchString);
-    //             setExperts(searchResult.experts || []);
-    //             setTopics(searchResult.topics || []);
-    //             setPosts(searchResult.posts || []);
-    //             setSessions(searchResult.sessions || []);
-    //         }
-    //         search();
-    //     } else {
-    //         const getAllExperts = async () => {
-    //             const experts = await expertApis.getAllExperts();
-    //             setExperts(experts);
-    //         }
-    //         const getAllTopics = async () => {
-    //             const topics = await topicApis.getExplorableTopics();
-    //             setTopics(topics);
-    //         }
-    //         const getAllPosts = async () => {
-    //             const posts = await postApis.getAllPosts();
-    //             setPosts(posts);
-    //         }
-    //         const getAllSessions = async () => {
-    //             const sessions = await sessionApis.getAllSessions();
-    //             setSessions(sessions);
-    //         }
-    //         getAllExperts();
-    //         getAllTopics();
-    //         getAllPosts();
-    //         getAllSessions();
-    //     }
-    // }, [props.searchString]);
+    useEffect(() => {
+        if (props.searchString !== "") {
+            const search = async () => {
+                const searchResult = await feedApis.search(props.searchString);
+                setExperts(searchResult.experts || []);
+                setTopics(searchResult.topics || []);
+                setPosts(searchResult.posts || []);
+                setSessions(searchResult.sessions || []);
+            }
+            search();
+        } else {
+            const getAllExperts = async () => {
+                const experts = await expertApis.getAllExperts();
+                setExperts(experts);
+            }
+            const getAllTopics = async () => {
+                const topics = await topicApis.getExplorableTopics();
+                setTopics(topics);
+            }
+            const getAllPosts = async () => {
+                const posts = await postApis.getAllPosts();
+                setPosts(posts);
+            }
+            const getAllSessions = async () => {
+                const sessions = await sessionApis.getAllSessions(currentUser._id);
+                setSessions(sessions);
+            }
+            getAllExperts();
+            getAllTopics();
+            getAllPosts();
+            getAllSessions();
+        }
+    }, [props.searchString]);
 
     return (
         <div className="Explore_container">

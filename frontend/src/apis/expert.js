@@ -10,12 +10,10 @@ const getFollowingExperts = async () => {
 };
 
 const followExpert = async (data) => {
-    data["user"] = userUtils.getPangeaId();
     return await requestMethods.post("/expert/follow/", data);
 };
 
 const unfollowExpert = async (data) => {
-    data["user"] = userUtils.getPangeaId();
     return await requestMethods.del("/expert/unfollow/", data);
 };
 

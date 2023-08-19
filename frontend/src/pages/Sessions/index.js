@@ -25,11 +25,11 @@ const Sessions = () => {
     ]);
 
     useEffect(() => {
-        // const getEnrolledSessions = async () => {
-        //     const enrolledSessions = await sessionApis.getEnrolledSessions();
-        //     setSessions(enrolledSessions);
-        // };
-        // getEnrolledSessions();
+        const getEnrolledSessions = async () => {
+            const enrolledSessions = await sessionApis.getEnrolledSessions(currentUser._id);
+            setSessions(enrolledSessions);
+        };
+        getEnrolledSessions();
     }, []);
 
     return (

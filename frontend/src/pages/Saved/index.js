@@ -3,8 +3,11 @@ import "./style.css";
 import MainLayout from "../../layouts/MainLayout";
 import NoData from "../../components/NoData";
 import FeedPost from "../../components/FeedPost";
+import { useSelector } from "react-redux";
+import UnauthorizedMessage from "../../components/UnauthorizedMessage";
 
 const Saved = () => {
+    const { currentUser } = useSelector((state) => state.user);
     // eslint-disable-next-line
     const [savedPosts, setSavedPosts] = useState([
         {
@@ -23,15 +26,19 @@ const Saved = () => {
     return (
         <div className="Saved_container">
             <MainLayout page={3}>
-                <div className="SavedLayoutContent_container">
-                    {savedPosts?.length === 0 ? (
-                        <NoData />
-                    ) : (
-                        savedPosts.map((post, ind) => (
-                            <FeedPost key={ind} saved post={post} />
-                        ))
-                    )}
-                </div>
+                {currentUser === undefined || currentUser === null ? (
+                    <UnauthorizedMessage />
+                ) : (
+                    <div className="SavedLayoutContent_container">
+                        {savedPosts?.length === 0 ? (
+                            <NoData />
+                        ) : (
+                            savedPosts.map((post, ind) => (
+                                <FeedPost key={ind} saved post={post} />
+                            ))
+                        )}
+                    </div>
+                )}
             </MainLayout>
         </div>
     );

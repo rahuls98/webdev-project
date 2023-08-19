@@ -1,5 +1,5 @@
 import "./style.css";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import List from "@mui/joy/List";
 import DynamicFeedIcon from "@mui/icons-material/DynamicFeed";
 import VideoCameraFrontOutlinedIcon from "@mui/icons-material/VideoCameraFrontOutlined";
@@ -7,10 +7,18 @@ import ChecklistRtlOutlinedIcon from "@mui/icons-material/ChecklistRtlOutlined";
 import BookmarkAddedOutlinedIcon from "@mui/icons-material/BookmarkAddedOutlined";
 import SidebarMenuItem from "../SidebarMenuItem";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
-import {useSelector} from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { setPage } from "../../reducers/navigation-reducer";
 
-const SidebarMenu = (props) => {
-    const {currentUser} = useSelector((state) => state.user);
+const SidebarMenu = () => {
+    const { currentUser } = useSelector((state) => state.user);
+    const { page } = useSelector((state) => state.page);
+    const dispatch = useDispatch();
+
+    const handlePageChange = (pageIndex) => {
+        dispatch(setPage(pageIndex));
+    };
+
     return (
         <div className="SidebarMenu_container">
             <List
@@ -22,65 +30,75 @@ const SidebarMenu = (props) => {
                     },
                 }}
             >
-                {(currentUser === undefined || currentUser === null) ?
+                {currentUser === undefined || currentUser === null ? (
                     <div>
-                        <Link to="/login" style={{textDecoration: "none"}}>
+                        <Link to="/login" style={{ textDecoration: "none" }}>
                             <SidebarMenuItem
-                                itemIcon={<DynamicFeedIcon/>}
+                                itemIcon={<DynamicFeedIcon />}
                                 itemTitle="Login"
-                                selected={props.selected === 0}
+                                selected={page === 0}
+                                onClick={() => handlePageChange(-1)}
                             />
                         </Link>
-                        <Link to="/register" style={{textDecoration: "none"}}>
+                        <Link to="/register" style={{ textDecoration: "none" }}>
                             <SidebarMenuItem
-                                itemIcon={<DynamicFeedIcon/>}
+                                itemIcon={<DynamicFeedIcon />}
                                 itemTitle="Signup"
-                                selected={props.selected === 1}
+                                selected={page === 1}
+                                onClick={() => handlePageChange(-1)}
                             />
                         </Link>
                     </div>
-                    :
+                ) : (
                     <div>
-                        <Link to="/feed" style={{textDecoration: "none"}}>
+                        <Link to="/feed" style={{ textDecoration: "none" }}>
                             <SidebarMenuItem
-                                itemIcon={<DynamicFeedIcon/>}
+                                itemIcon={<DynamicFeedIcon />}
                                 itemTitle="Feed"
-                                selected={props.selected === 0}
+                                selected={page === 0}
+                                onClick={() => handlePageChange(0)}
                             />
                         </Link>
-                        <Link to="/sessions" style={{textDecoration: "none"}}>
+                        <Link to="/sessions" style={{ textDecoration: "none" }}>
                             <SidebarMenuItem
-                                itemIcon={<VideoCameraFrontOutlinedIcon/>}
+                                itemIcon={<VideoCameraFrontOutlinedIcon />}
                                 itemTitle="Sessions"
-                                selected={props.selected === 1}
+                                selected={page === 1}
+                                onClick={() => handlePageChange(1)}
                             />
                         </Link>
-                        <Link to="/following" style={{textDecoration: "none"}}>
+                        <Link
+                            to="/following"
+                            style={{ textDecoration: "none" }}
+                        >
                             <SidebarMenuItem
-                                itemIcon={<ChecklistRtlOutlinedIcon/>}
+                                itemIcon={<ChecklistRtlOutlinedIcon />}
                                 itemTitle="Following"
-                                selected={props.selected === 2}
+                                selected={page === 2}
+                                onClick={() => handlePageChange(2)}
                             />
                         </Link>
-                        <Link to="/saved" style={{textDecoration: "none"}}>
+                        <Link to="/saved" style={{ textDecoration: "none" }}>
                             <SidebarMenuItem
-                                itemIcon={<BookmarkAddedOutlinedIcon/>}
+                                itemIcon={<BookmarkAddedOutlinedIcon />}
                                 itemTitle="Saved"
-                                selected={props.selected === 3}
+                                selected={page === 3}
+                                onClick={() => handlePageChange(3)}
                             />
                         </Link>
-                        <Link to="/explore" style={{textDecoration: "none"}}>
+                        <Link to="/explore" style={{ textDecoration: "none" }}>
                             <SidebarMenuItem
-                                itemIcon={<SearchOutlinedIcon/>}
+                                itemIcon={<SearchOutlinedIcon />}
                                 itemTitle="Explore"
-                                selected={props.selected === 4}
+                                selected={page === 4}
+                                onClick={() => handlePageChange(4)}
                             />
                         </Link>
-                    </div>}
+                    </div>
+                )}
             </List>
         </div>
-    )
-        ;
+    );
 };
 
 export default SidebarMenu;

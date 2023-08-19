@@ -11,7 +11,7 @@ export const login = async ({ email, password }) => {
         _id: 1,
         role: "Expert",
         fullname: "Rahul Suresh",
-        isVerified: false,
+        isVerified: true,
     };
     return user;
 };

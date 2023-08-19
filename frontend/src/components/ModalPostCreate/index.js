@@ -83,7 +83,12 @@ const ModalPostCreate = () => {
                     </div>
                     <div className="ModalPostCreate_actions">
                         <div className="ModalPostCreate_cancel">
-                            <Button variant="outlined">Cancel</Button>
+                            <Button
+                                variant="outlined"
+                                onClick={() => setModalOpen(false)}
+                            >
+                                Cancel
+                            </Button>
                         </div>
                         <div className="ModalPostCreate_post">
                             <Button

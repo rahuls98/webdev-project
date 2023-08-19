@@ -17,7 +17,15 @@ const FeedSession = (props) => {
     const [enrolled, setEnrolled] = useState(props.enrolled);
     const [enrolledSnackbar, setEnrolledSnackbar] = useState(false);
 
-    const handleEnrollOnClick = async () => {};
+    const handleEnrollOnClick = async () => {
+        if (!enrolled) {
+            setEnrolledSnackbar(true);
+            // await sessionApis.enrollInSession({ session: props.session._id });
+        } else {
+            // await sessionApis.unenrollInSession({ session: props.session._id });
+        }
+        setEnrolled(!enrolled);
+    };
 
     const handleEnrolledSnackbarClose = (event, reason) => {
         if (reason === "clickaway") {

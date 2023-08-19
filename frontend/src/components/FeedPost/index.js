@@ -11,7 +11,6 @@ import ThumbDownAltIcon from "@mui/icons-material/ThumbDownAlt";
 import ThumbDownAltOutlinedIcon from "@mui/icons-material/ThumbDownAltOutlined";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
-// import ShareIcon from '@mui/icons-material/Share';
 import TopicChip from "../TopicChip";
 import datetimeUtils from "../../utils/datetime";
 import Avatar from "@mui/material/Avatar";
@@ -19,25 +18,28 @@ import { useSelector } from "react-redux";
 
 const FeedPost = (props) => {
     const { currentUser } = useSelector((state) => state.user);
-    // eslint-disable-next-line
     const [saved, setSaved] = useState(props.saved || false);
-    // eslint-disable-next-line
     const [upvoted, setUpvoted] = useState(() =>
         props.post?.upvotes.includes(currentUser ? currentUser._id : null)
     );
-    // eslint-disable-next-line
     const [upvotes, setUpvotes] = useState(props.post?.upvotes.length || 0);
-    // eslint-disable-next-line
     const [downvoted, setDownvoted] = useState(() =>
         props.post?.downvotes.includes(currentUser ? currentUser._id : null)
     );
-    // eslint-disable-next-line
     const [downvotes, setDownvotes] = useState(
         props.post?.downvotes.length || 0
     );
     const [savedSnackbar, setSavedSnackbar] = useState(false);
 
-    const handleSaveOnClick = async () => {};
+    const handleSaveOnClick = async () => {
+        if (!saved) {
+            setSavedSnackbar(true);
+            // await postApis.savePost({ post: props.post?._id });
+        } else {
+            // await postApis.unsavePost({ post: props.post?._id });
+        }
+        setSaved(!saved);
+    };
 
     const handleSavedSnackbarClose = (event, reason) => {
         if (reason === "clickaway") {
@@ -46,7 +48,35 @@ const FeedPost = (props) => {
         setSavedSnackbar(false);
     };
 
-    const handleVoteOnClick = async (action) => {};
+    const handleVoteOnClick = async (action) => {
+        if (action === "upvote") {
+            if (upvoted) {
+                setUpvoted(false);
+                setUpvotes(upvotes - 1);
+                // await postApis.removePostUpvote({ post: props.post?._id });
+                return;
+            } else if (downvoted) {
+                setDownvoted(false);
+                setDownvotes(downvotes - 1);
+            }
+            setUpvoted(true);
+            setUpvotes(upvotes + 1);
+            // await postApis.upvotePost({ post: props.post?._id });
+        } else if (action === "downvote") {
+            if (downvoted) {
+                setDownvoted(false);
+                setDownvotes(downvotes - 1);
+                // await postApis.removePostDownvote({ post: props.post?._id });
+                return;
+            } else if (upvoted) {
+                setUpvoted(false);
+                setUpvotes(upvotes - 1);
+            }
+            setDownvoted(true);
+            setDownvotes(downvotes + 1);
+            // await postApis.downvotePost({ post: props.post?._id });
+        }
+    };
 
     return (
         <div className="FeedPost_container">

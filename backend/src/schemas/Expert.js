@@ -1,10 +1,6 @@
 import mongoose from "mongoose";
 
 const ExpertSchema = new mongoose.Schema({
-    pangeaUserId: {
-        type: String,
-        required: true,
-    },
     email: {
         type: String,
         required: true,
@@ -21,6 +17,14 @@ const ExpertSchema = new mongoose.Schema({
         type: [String],
         required: true,
     },
+    password: {
+        type : String,
+        required: true
+    },
+    isVerified: {
+        type: Boolean,
+        required: true
+    }
 });
 
 export default ExpertSchema;

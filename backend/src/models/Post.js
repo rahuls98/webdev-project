@@ -7,7 +7,7 @@ const Post = mongoose.model("Post", PostSchema);
 const createPost = async (author, profilePhoto, topics, content) => {
     try {
         const redactResponse = await TextProcessing.redact(content);
-        if (redactResponse.count == 0) {
+        if (redactResponse.count === 0) {
             const post = new Post({
                 author,
                 profilePhoto,

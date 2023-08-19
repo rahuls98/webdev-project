@@ -2,18 +2,18 @@ import express from "express";
 import cors from "cors";
 import mongoose from "mongoose";
 import authenticationRoutes from "./routes/authentication.js";
+import expertRoutes from "./routes/expert.js";
+import topicRoutes from "./routes/topic.js";
+import postRoutes from "./routes/post.js";
+import sessionRoutes from "./routes/session.js";
+import followingRoutes from "./routes/following.js";
+import feedRoutes from "./routes/feed.js";
+import vaultRoutes from "./routes/vault.js";
+
 import dotenv from "dotenv";
 import session from "express-session"
 
 dotenv.config();
-
-import ExpertModel from "./models/Expert.js";
-import PostModel from "./models/Post.js";
-import SessionModel from "./models/Session.js";
-import TopicModel from "./models/Topic.js";
-import UserModel from "./models/User.js";
-import UserFollowingExpertModel from "./models/UserFollowingExpert.js";
-import UserFollowingTopicModel from "./models/UserFollowingTopic.js";
 
 const PORT = 8000;
 const server = express();
@@ -53,6 +53,14 @@ server.use(express.json());
 
 
 server.use("/authentication", authenticationRoutes);
+server.use("/expert", expertRoutes);
+server.use("/topic", topicRoutes);
+server.use("/feed", feedRoutes);
+server.use("/session", sessionRoutes);
+server.use("/following", followingRoutes);
+server.use("/post", postRoutes);
+server.use("/vault", vaultRoutes);
+
 
 server.get("/", (req, res) => {
     res.status(200).send("MediHub is live!");

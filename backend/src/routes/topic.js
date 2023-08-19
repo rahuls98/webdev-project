@@ -1,18 +1,18 @@
-import express, {Request, Response, Router} from "express";
-import TopicModel from "../models/Topic";
-import UserFollowingTopicModel from "../models/UserFollowingTopic";
-import {verifyToken} from "../middleware/authorization";
+import express from "express";
+import TopicModel from "../models/Topic.js";
+import UserFollowingTopicModel from "../models/UserFollowingTopic.js";
+import {isAuthenticated} from "../middleware/authorization.js";
 
 const router = express.Router();
 
-router.get('/', verifyToken, async (req, res) => {
+router.get('/', isAuthenticated, async (req, res) => {
     const user = req.query.user?.toString() || "";
     const topicsToExclude = await UserFollowingTopicModel.readFollowedTopicsIds(user) || [];
     const topics = await TopicModel.readTopics(topicsToExclude) || [];
     res.status(200).send(topics);
 })
 
-router.post('/', verifyToken, async (req, res) => {
+router.post('/', isAuthenticated, async (req, res) => {
     const topic = req.body.topic;
     await TopicModel.createTopic(topic);
     res.status(201).send({
@@ -20,7 +20,7 @@ router.post('/', verifyToken, async (req, res) => {
     });
 })
 
-router.post('/follow', verifyToken, async (req, res) => {
+router.post('/follow', isAuthenticated, async (req, res) => {
     const userId = req.body.user;
     const topicId = req.body.topic;
     await UserFollowingTopicModel.createUserFollowingTopic(userId, topicId)
@@ -29,7 +29,7 @@ router.post('/follow', verifyToken, async (req, res) => {
     });
 });
 
-router.delete('/unfollow', verifyToken, async (req, res) => {
+router.delete('/unfollow', isAuthenticated, async (req, res) => {
     const userId = req.body.user;
     const topicId = req.body.topic;
     await UserFollowingTopicModel.deleteUserFollowingTopic(userId, topicId)

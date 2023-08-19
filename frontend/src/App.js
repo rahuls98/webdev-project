@@ -11,15 +11,18 @@ import Register from "./pages/Register";
 import { configureStore } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
 import authReducer from "./reducers/auth-reducer";
+import AdminVerifyFeed from "./pages/AdminVerifyFeed";
 import navigationReducer from "./reducers/navigation-reducer";
 import ModalMessage from "./components/ModalMessage";
 import MessageModalContext from "./services/message-modal-context";
 import LiveStream from "./pages/LiveStream";
+import unverifiedExpertReducer from "./reducers/unverified-experts-reducer";
 
 const store = configureStore({
     reducer: {
         user: authReducer,
         page: navigationReducer,
+        unverifiedExperts: unverifiedExpertReducer,
     },
 });
 
@@ -54,6 +57,10 @@ function App() {
                             <Route path="/saved" element={<Saved />} />
                             <Route path="/explore" element={<Explore />} />
                             <Route path="/live" element={<LiveStream />} />
+                            <Route
+                                path="/admin-verify-feed"
+                                element={<AdminVerifyFeed />}
+                            />
                         </Routes>
                     </BrowserRouter>
                 </div>

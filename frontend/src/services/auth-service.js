@@ -5,14 +5,14 @@ const USERS_URL = `${SERVER_API_URL}/authentication`;
 const api = axios.create({ withCredentials: true });
 
 export const login = async ({ email, password }) => {
-    // const response = await api.post(`${USERS_URL}/signin`, { email, password })
-    // const user = response.data
-    const user = {
-        _id: 1,
-        role: "Expert",
-        fullname: "Rahul Suresh",
-        isVerified: true,
-    };
+    const response = await api.post(`${USERS_URL}/signin`, { email, password });
+    const user = response.data;
+    // const user = {
+    //     _id: 1,
+    //     role: "Expert",
+    //     fullname: "Rahul Suresh",
+    //     isVerified: true,
+    // };
     return user;
 };
 

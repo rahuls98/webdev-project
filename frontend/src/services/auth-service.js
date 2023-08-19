@@ -9,8 +9,9 @@ export const login = async ({ email, password }) => {
     // const user = response.data
     const user = {
         _id: 1,
-        role: "User",
+        role: "Expert",
         fullname: "Rahul Suresh",
+        isVerified: false,
     };
     return user;
 };

@@ -9,14 +9,18 @@ const Navbar = (props) => {
     const { currentUser } = useSelector((state) => state.user);
     const { page } = useSelector((state) => state.page);
 
+    const handleSearchSelection = (s) => {
+        props.setSearchString(s);
+    };
+
     return (
         <div className="Navbar_container">
             <div className="Navbar_left">
                 {page === 4 ? (
                     <TopicSearch
                         searchString={props.searchString}
-                        // onSelect={handleSearchSelection}
-                        // onSearchClose={props.onSearchClose}
+                        onSelect={handleSearchSelection}
+                        onSearchClose={props.onSearchClose}
                     />
                 ) : null}
             </div>

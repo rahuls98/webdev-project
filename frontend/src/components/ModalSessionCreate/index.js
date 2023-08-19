@@ -38,6 +38,7 @@ const ModalSessionCreate = () => {
     const handleSubmit = async () => {
         const dateString = datetimeUtils.dateToReadableString(date.$d);
         const timeString = datetimeUtils.timeToReadableString(time.$d);
+        // eslint-disable-next-line
         const sessionData = {
             title,
             description,
@@ -100,6 +101,7 @@ const ModalSessionCreate = () => {
                                 key={index}
                                 label={topic}
                                 withMargin
+                                onClick={() => {}}
                                 onDelete={() => handleTopicDeletion(index)}
                             />
                         ))}

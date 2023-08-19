@@ -1,3 +1,4 @@
+import { useState } from "react";
 import "./App.css";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Feed from "./pages/Feed";
@@ -11,6 +12,8 @@ import { configureStore } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
 import authReducer from "./reducers/auth-reducer";
 import navigationReducer from "./reducers/navigation-reducer";
+import ModalMessage from "./components/ModalMessage";
+import MessageModalContext from "./services/message-modal-context";
 
 const store = configureStore({
     reducer: {
@@ -20,22 +23,39 @@ const store = configureStore({
 });
 
 function App() {
+    const [messageModalOpen, setMessageModalOpen] = useState(false);
+    const [messageModalContent, setMessageModalContent] = useState("");
+    const messageModalHandleOpen = () => setMessageModalOpen(true);
+    const messageModalHandleClose = () => setMessageModalOpen(false);
+
     return (
         <Provider store={store}>
-            <div className="App">
-                <BrowserRouter>
-                    <Routes>
-                        <Route path="/" element={<Navigate to="/feed" />} />
-                        <Route path="/login" element={<Login />} />
-                        <Route path="/register" element={<Register />} />
-                        <Route path="/feed" element={<Feed />} />
-                        <Route path="/sessions" element={<Sessions />} />
-                        <Route path="/following" element={<Following />} />
-                        <Route path="/saved" element={<Saved />} />
-                        <Route path="/explore" element={<Explore />} />
-                    </Routes>
-                </BrowserRouter>
-            </div>
+            <MessageModalContext.Provider
+                value={{
+                    setMessageModalContent: setMessageModalContent,
+                    messageModalHandleOpen: messageModalHandleOpen,
+                }}
+            >
+                <ModalMessage
+                    open={messageModalOpen}
+                    handleClose={messageModalHandleClose}
+                    message={messageModalContent}
+                />
+                <div className="App">
+                    <BrowserRouter>
+                        <Routes>
+                            <Route path="/" element={<Navigate to="/feed" />} />
+                            <Route path="/login" element={<Login />} />
+                            <Route path="/register" element={<Register />} />
+                            <Route path="/feed" element={<Feed />} />
+                            <Route path="/sessions" element={<Sessions />} />
+                            <Route path="/following" element={<Following />} />
+                            <Route path="/saved" element={<Saved />} />
+                            <Route path="/explore" element={<Explore />} />
+                        </Routes>
+                    </BrowserRouter>
+                </div>
+            </MessageModalContext.Provider>
         </Provider>
     );
 }

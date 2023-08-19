@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useNavigate } from "react-router";
 import "./style.css";
 import TextField from "@mui/material/TextField";
@@ -13,11 +13,11 @@ import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
-import {useDispatch} from "react-redux";
-import {registerThunk} from "../../services/auth-thunks";
+import { useDispatch } from "react-redux";
+import { registerThunk } from "../../services/auth-thunks";
+import MessageModalContext from "../../services/message-modal-context";
 
 const FormSignup = (props) => {
-    // eslint-disable-next-line
     const [role, setRole] = useState("User");
     const [fullname, setFullname] = useState("");
     const [email, setEmail] = useState("");
@@ -31,6 +31,8 @@ const FormSignup = (props) => {
     const [showConfirmPassword, setConfirmShowPassword] = useState(false);
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const { setMessageModalContent, messageModalHandleOpen } =
+        useContext(MessageModalContext);
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -63,8 +65,15 @@ const FormSignup = (props) => {
             return;
         }
         if (fullname && email && password && confirmPassword) {
-            await dispatch(registerThunk({ email, password , fullname,role}));
-            navigate("/feed");
+            try {
+                await dispatch(
+                    registerThunk({ email, password, fullname, role })
+                );
+                navigate("/feed");
+            } catch (e) {
+                messageModalHandleOpen(true);
+                setMessageModalContent(e.message);
+            }
         }
     };
 

@@ -10,8 +10,8 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import RemoveCircleOutlinedIcon from "@mui/icons-material/RemoveCircleOutlined";
 import AddCircleOutlinedIcon from "@mui/icons-material/AddCircleOutlined";
-import {useSelector} from "react-redux";
-// import expertApis from "../../apis/expert";
+import { useSelector } from "react-redux";
+import expertApis from "../../apis/expert";
 // import TopicChip from "../TopicChip";
 
 const TableItemExpert = (props) => {
@@ -25,11 +25,17 @@ const TableItemExpert = (props) => {
     const handleActionClick = async () => {
         if (itemAction === "Unfollow") {
             setSnackbarMessage("Unfollowed");
-            await expertApis.unfollowExpert({ expert: props.expertId, user: currentUser._id});
+            await expertApis.unfollowExpert({
+                expert: props.expertId,
+                user: currentUser._id,
+            });
             setItemAction("Follow");
         } else if (itemAction === "Follow") {
             setSnackbarMessage("Followed");
-            await expertApis.followExpert({ expert: props.expertId, user: currentUser._id});
+            await expertApis.followExpert({
+                expert: props.expertId,
+                user: currentUser._id,
+            });
             setItemAction("Unfollow");
         }
         setSnackbar(true);

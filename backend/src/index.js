@@ -11,7 +11,7 @@ import feedRoutes from "./routes/feed.js";
 import vaultRoutes from "./routes/vault.js";
 
 import dotenv from "dotenv";
-import session from "express-session"
+import session from "express-session";
 
 dotenv.config();
 
@@ -27,10 +27,12 @@ mongoose
         console.log(err);
     });
 
-server.use(cors({
-    credentials: true,
-    origin: process.env.FRONTEND_URL,
-}));
+server.use(
+    cors({
+        credentials: true,
+        origin: process.env.FRONTEND_URL,
+    })
+);
 
 const sessionOptions = {
     secret: "any string",
@@ -41,16 +43,16 @@ const sessionOptions = {
 if (process.env.NODE_ENV !== "development") {
     sessionOptions.proxy = true;
     sessionOptions.cookie = {
-        sameSite: "none",
+        name: "session",
+        expires: 10000,
+        httpOnly: true,
         secure: true,
+        sameSite: "none",
     };
 }
-server.use(
-    session(sessionOptions)
-)
+server.use(session(sessionOptions));
 
 server.use(express.json());
-
 
 server.use("/authentication", authenticationRoutes);
 server.use("/expert", expertRoutes);
@@ -60,7 +62,6 @@ server.use("/session", sessionRoutes);
 server.use("/following", followingRoutes);
 server.use("/post", postRoutes);
 server.use("/vault", vaultRoutes);
-
 
 server.get("/", (req, res) => {
     res.status(200).send("MediHub is live!");

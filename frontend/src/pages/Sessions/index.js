@@ -5,6 +5,7 @@ import SessionCard from "../../components/SessionCard";
 import NoData from "../../components/NoData";
 import { useSelector } from "react-redux";
 import UnauthorizedMessage from "../../components/UnauthorizedMessage";
+import sessionApis from "../../apis/session";
 
 const Sessions = () => {
     const { currentUser } = useSelector((state) => state.user);
@@ -26,7 +27,9 @@ const Sessions = () => {
 
     useEffect(() => {
         const getEnrolledSessions = async () => {
-            const enrolledSessions = await sessionApis.getEnrolledSessions(currentUser._id);
+            const enrolledSessions = await sessionApis.getEnrolledSessions(
+                currentUser._id
+            );
             setSessions(enrolledSessions);
         };
         getEnrolledSessions();

@@ -15,43 +15,12 @@ import UnauthenticatedFeed from "../../components/UnauthenticatedFeed";
 
 const Feed = () => {
     const { currentUser } = useSelector((state) => state.user);
+    console.log(currentUser);
     const [tab, setTab] = useState("1");
     // eslint-disable-next-line
-    const [posts, setPosts] = useState([
-        {
-            _id: 1,
-            _doc: {
-                author: {
-                    fullname: "Rahul Suresh",
-                },
-                createdDate: new Date(),
-                topics: ["Topic 1", "Topic 2", "Topic 3"],
-                content:
-                    "<p><strong>Rich text</strong>: <i>Italics</i> and <u>Underline</u></p>",
-                upvotes: [],
-                downvotes: [],
-            },
-            saved: true,
-        },
-    ]);
+    const [posts, setPosts] = useState([]);
     // eslint-disable-next-line
-    const [sessions, setSessions] = useState([
-        {
-            _id: 1,
-            _doc: {
-                author: {
-                    fullname: "Rahul Suresh",
-                },
-                createdDate: new Date(),
-                topics: ["Topic 1", "Topic 2", "Topic 3"],
-                title: "Session title",
-                description: "Session description",
-                sessionDate: "June 10 2023",
-                sessionTime: "10:00 AM",
-            },
-            enrolled: true,
-        },
-    ]);
+    const [sessions, setSessions] = useState([]);
 
     const handleTabChange = (event, newValue) => {
         setTab(newValue);

@@ -11,10 +11,10 @@ import MenuList from "@mui/material/MenuList";
 import MenuItem from "@mui/material/MenuItem";
 import ListItemText from "@mui/material/ListItemText";
 import ListItemIcon from "@mui/material/ListItemIcon";
-// import sessionApis from "../../apis/session";
-// import { useHMSActions } from "@100mslive/react-sdk";
+import sessionApis from "../../apis/session";
+import { useHMSActions } from "@100mslive/react-sdk";
 import { useSelector } from "react-redux";
-// import vaultApis from "../../apis/vault";
+import vaultApis from "../../apis/vault";
 import MessageModalContext from "../../services/message-modal-context";
 import { useNavigate } from "react-router";
 
@@ -29,6 +29,7 @@ const SessionCard = (props) => {
 
     const getDate = () => {
         let dateString = props.session?.sessionDate;
+        // eslint-disable-next-line
         const [month, date, year] = dateString.split(" ");
         return `${month} ${date}`;
     };
@@ -42,11 +43,14 @@ const SessionCard = (props) => {
     };
 
     const handleUnenrollmentClick = async () => {
-         await sessionApis.unenrollInSession({session: props.session._id , user : currentUser._id});
+        await sessionApis.unenrollInSession({
+            session: props.session._id,
+            user: currentUser._id,
+        });
     };
 
     const handleSessionDoneClick = async () => {
-         await sessionApis.markSessionComplete({session: props.session._id});
+        await sessionApis.markSessionComplete({ session: props.session._id });
     };
 
     const handleJoinClick = async () => {
@@ -85,7 +89,7 @@ const SessionCard = (props) => {
             userName: userName,
             authToken: token,
         });
-        useNavigate("/live");
+        navigate("/live");
     };
 
     return (

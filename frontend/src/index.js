@@ -4,12 +4,15 @@ import "./index.css";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import App from "./App";
+import { HMSRoomProvider } from "@100mslive/react-sdk";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
     <React.StrictMode>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <App />
+            <HMSRoomProvider>
+                <App />
+            </HMSRoomProvider>
         </LocalizationProvider>
     </React.StrictMode>
 );

@@ -4,7 +4,7 @@ const getFollowingExperts = async (userId) => {
     return await requestMethods.get(`/following/experts?user=${userId}`);
 };
 
-const getFollowingTopics = async () => {
+const getFollowingTopics = async (userId) => {
     return await requestMethods.get(`/following/topics?user=${userId}`);
 };
 

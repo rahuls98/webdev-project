@@ -1,15 +1,14 @@
 import * as usersDao from "../Dao/user-dao.js";
 import Expert from "../models/Expert.js";
 
-
 export const register = async (req, res) => {
-    console.log(req.body)
+    console.log(req.body);
     try {
-        if (req.body.role === 'Expert') {
+        if (req.body.role === "Expert") {
             const expert = await Expert.findExpertByUsername(req.body.email);
             if (expert) {
                 res.status(403).json({
-                    "message": "Expert already exists"
+                    message: "Expert already exists",
                 });
                 return;
             }
@@ -23,7 +22,7 @@ export const register = async (req, res) => {
             const user = await usersDao.findUserByUsername(req.body.email);
             if (user) {
                 res.status(403).json({
-                    "message": "User already exists"
+                    message: "User already exists",
                 });
                 return;
             }
@@ -35,7 +34,7 @@ export const register = async (req, res) => {
         console.log(error);
         res.status(500).json({
             status: 500,
-            message: "Found Duplicate Key retry with a different user ID"
+            message: "Found Duplicate Key retry with a different user ID",
         });
     }
 };
@@ -50,15 +49,20 @@ export const login = async (req, res) => {
                 req.session["currentUser"] = user;
                 res.json(user);
             } else {
-                const expert = await Expert.findExpertByCredentials(email, password);
+                const expert = await Expert.findExpertByCredentials(
+                    email,
+                    password
+                );
                 if (expert) {
-                    expert.role = "Expert";
-                    req.session["currentUser"] = expert;
-                    res.json(expert);
+                    let obj = { ...expert._doc, role: "Expert" };
+                    // expert.role = "Expert";
+                    req.session["currentUser"] = obj;
+                    res.json(obj);
                 } else {
                     res.status(400).json({
                         status: 400,
-                        message: "Incorrect Credentials,neither user nor admin nor expert !!!"
+                        message:
+                            "Incorrect Credentials,neither user nor admin nor expert !!!",
                     });
                 }
             }
@@ -66,13 +70,13 @@ export const login = async (req, res) => {
             console.log(error);
             res.status(500).json({
                 status: 500,
-                message: "Error fetching entry from Database"
+                message: "Error fetching entry from Database",
             });
         }
     } else {
         res.status(400).json({
             status: 400,
-            message: "Username and Password missing in the request body !!!"
+            message: "Username and Password missing in the request body !!!",
         });
     }
 };
@@ -81,7 +85,7 @@ export const logout = async (req, res) => {
     req.session.destroy();
     res.status(200).json({
         status: 200,
-        message: "session closed for the user"
+        message: "session closed for the user",
     });
 };
 
@@ -93,10 +97,10 @@ export const update = (req, res) => {
     }
     let response = usersDao.updateUser(req.body._id, req.body);
 
-    if (response.status === 'ok') {
-        res.json(response.user)
+    if (response.status === "ok") {
+        res.json(response.user);
     } else {
-        res.sendStatus(500)
+        res.sendStatus(500);
     }
 };
 
@@ -107,14 +111,14 @@ export const verifyExpert = async (req, res) => {
     } catch (error) {
         console.log(error);
     }
-}
+};
 
 export const getUnverifiedExperts = async (req, res) => {
     try {
         const unverifiedExperts = await Expert.findAllUnverifiedExperts();
-        res.status(200).json(unverifiedExperts)
+        res.status(200).json(unverifiedExperts);
     } catch (error) {
         console.log(error);
-        res.sendStatus(500)
+        res.sendStatus(500);
     }
-}
+};

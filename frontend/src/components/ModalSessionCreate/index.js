@@ -12,8 +12,7 @@ import Stack from "@mui/material/Stack";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { TimePicker } from "@mui/x-date-pickers/TimePicker";
 import datetimeUtils from "../../utils/datetime";
-// import sessionApis from "../../apis/session";
-// import userUtils from "../../utils/user";
+import sessionApis from "../../apis/session";
 import { useSelector } from "react-redux";
 
 const ModalSessionCreate = () => {
@@ -45,9 +44,9 @@ const ModalSessionCreate = () => {
             date: dateString,
             time: timeString,
             topics,
-            author: currentUser._id
+            author: currentUser._id,
         };
-         await sessionApis.createSession(sessionData);
+        await sessionApis.createSession(sessionData);
         setModalOpen(false);
     };
 

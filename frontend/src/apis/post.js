@@ -4,11 +4,11 @@ const createPost = async (data) => {
     return await requestMethods.post("/post/", data);
 };
 
-const getAllPosts = async () => {
+const getAllPosts = async (userId) => {
     return await requestMethods.get(`/post?user=${userId}`);
 };
 
-const getSavedPosts = async () => {
+const getSavedPosts = async (userId) => {
     return await requestMethods.get(`/post/saved?user=${userId}`);
 };
 

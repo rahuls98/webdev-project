@@ -1,5 +1,4 @@
 import requestMethods from "./base";
-import userUtils from "../utils/user";
 
 const createSession = async (data) => {
     return await requestMethods.post("/session/", data);

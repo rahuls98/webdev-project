@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import "./style.css";
 import Button from "@mui/joy/Button";
 import Modal from "@mui/joy/Modal";
@@ -8,15 +8,14 @@ import TextEditor from "../TextEditor";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import TopicSearch from "../TopicSearch";
 import TopicChip from "../TopicChip";
-// import postApis from "../../apis/post";
-// import userUtils from "../../utils/user";
-// import MessageModalContext from "../../utils/MessageModalContext";
+import postApis from "../../apis/post";
+import MessageModalContext from "../../services/message-modal-context";
 import { useSelector } from "react-redux";
 
 const ModalPostCreate = () => {
     const { currentUser } = useSelector((state) => state.user);
-    // const { setMessageModalContent, messageModalHandleOpen } =
-    // useContext(MessageModalContext);
+    const { setMessageModalContent, messageModalHandleOpen } =
+        useContext(MessageModalContext);
     const [modalOpen, setModalOpen] = useState(false);
     const [editorValue, setEditorValue] = useState("");
     const [topics, setTopics] = useState([]);
@@ -32,17 +31,19 @@ const ModalPostCreate = () => {
     };
 
     const handleSubmit = async () => {
-        // const createResponse = await postApis.createPost({
-        //     content: editorValue.toString(),
-        //     topics: topics,
-        // });
-        // if (createResponse.msg !== "Success!") {
-        //     messageModalHandleOpen(true);
-        //     setMessageModalContent(createResponse.msg);
-        //     return;
-        // } else {
-        //     setModalOpen(false);
-        // }
+        const createResponse = await postApis.createPost({
+            author: currentUser._id,
+            profilePhoto: "",
+            content: editorValue.toString(),
+            topics: topics,
+        });
+        if (createResponse.msg !== "Success!") {
+            messageModalHandleOpen(true);
+            setMessageModalContent(createResponse.msg);
+            return;
+        } else {
+            setModalOpen(false);
+        }
     };
 
     return (

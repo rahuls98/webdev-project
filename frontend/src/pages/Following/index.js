@@ -10,6 +10,7 @@ import TableExperts from "../../components/TableExperts";
 import TableTopics from "../../components/TableTopics";
 import { useSelector } from "react-redux";
 import UnauthorizedMessage from "../../components/UnauthorizedMessage";
+import followingApis from "../../apis/following";
 
 const Following = () => {
     const { currentUser } = useSelector((state) => state.user);
@@ -47,16 +48,20 @@ const Following = () => {
 
     useEffect(() => {
         const getFollowingExperts = async () => {
-            const experts = await followingApis.getFollowingExperts(currentUser._id);
+            const experts = await followingApis.getFollowingExperts(
+                currentUser._id
+            );
             setExperts(experts);
-        }
+        };
         const getFollowingTopics = async () => {
-            const topics = await followingApis.getFollowingTopics(currentUser._id);
+            const topics = await followingApis.getFollowingTopics(
+                currentUser._id
+            );
             setTopics(topics);
-        }
+        };
         getFollowingExperts();
         getFollowingTopics();
-    }, []);
+    }, [currentUser._id]);
 
     return (
         <div className="Following_container">

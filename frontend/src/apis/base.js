@@ -1,12 +1,10 @@
-import userUtils from "../utils/user";
-
 const BASE_URL = process.env.REACT_APP_SERVER_API_URL;
 
 const get = async (url) => {
     const options = {
         method: "GET",
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
         },
     };
     try {
@@ -37,7 +35,7 @@ const del = async (url, data) => {
     const options = {
         method: "DELETE",
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
         },
         body: JSON.stringify(data),
     };
@@ -53,7 +51,7 @@ const put = async (url, data) => {
     const options = {
         method: "PUT",
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
         },
         body: JSON.stringify(data),
     };

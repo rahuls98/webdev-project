@@ -1,4 +1,3 @@
-import userUtils from "../utils/user";
 import requestMethods from "./base";
 
 const getAllExperts = async () => {

@@ -7,6 +7,7 @@ const api = axios.create({ withCredentials: true });
 export const login = async ({ email, password }) => {
     const response = await api.post(`${USERS_URL}/signin`, { email, password });
     const user = response.data;
+    console.log(user);
     // const user = {
     //     _id: 1,
     //     role: "Expert",

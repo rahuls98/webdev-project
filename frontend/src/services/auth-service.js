@@ -6,14 +6,11 @@ const api = axios.create({ withCredentials: true });
 
 export const login = async ({ email, password }) => {
     // const response = await api.post(`${USERS_URL}/signin`, { email, password })
-    console.log("Login success");
-    // console.log(response.data);
     // const user = response.data
     const user = {
         _id: 1,
         role: "User",
     };
-    console.log(user + " Fetched from node server...");
     return user;
 };
 
@@ -29,7 +26,5 @@ export const updateUser = async (user) => {
 export const register = async (user) => {
     const response = await api.post(`${USERS_URL}/signup`, user);
     const responseUser = response.data;
-    console.log("API hit for registering users");
-    console.log(responseUser);
     return responseUser;
 };

@@ -5,8 +5,6 @@ export const loginThunk = createAsyncThunk(
     "authentication/login",
     async (credentials) => {
         const user = await authService.login(credentials);
-        console.log("User fetched");
-        console.log(user);
         return user;
     }
 );

@@ -3,8 +3,11 @@ import "./style.css";
 import MainLayout from "../../layouts/MainLayout";
 import SessionCard from "../../components/SessionCard";
 import NoData from "../../components/NoData";
+import { useSelector } from "react-redux";
+import UnauthorizedMessage from "../../components/UnauthorizedMessage";
 
 const Sessions = () => {
+    const { currentUser } = useSelector((state) => state.user);
     // eslint-disable-next-line
     const [sessions, setSessions] = useState([
         {
@@ -30,16 +33,20 @@ const Sessions = () => {
 
     return (
         <div className="Sessions_container">
-            <MainLayout page={1}>
-                <div className="SessionsLayoutContent_container">
-                    {sessions.length === 0 ? (
-                        <NoData />
-                    ) : (
-                        sessions.map((session, ind) => (
-                            <SessionCard key={ind} session={session} />
-                        ))
-                    )}
-                </div>
+            <MainLayout page={currentUser ? 1 : -1}>
+                {currentUser === undefined || currentUser === null ? (
+                    <UnauthorizedMessage />
+                ) : (
+                    <div className="SessionsLayoutContent_container">
+                        {sessions.length === 0 ? (
+                            <NoData />
+                        ) : (
+                            sessions.map((session, ind) => (
+                                <SessionCard key={ind} session={session} />
+                            ))
+                        )}
+                    </div>
+                )}
             </MainLayout>
         </div>
     );

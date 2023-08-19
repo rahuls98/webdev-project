@@ -59,13 +59,14 @@ const Feed = () => {
 
     return (
         <div>
-            <div className="Feed_container">
-                <MainLayout page={0}>
-                    <div className="FeedLayoutContent_container">
-                        {console.log(currentUser)}
-                        {currentUser === undefined || currentUser === null ? (
-                            <UnauthenticatedFeed />
-                        ) : (
+            {currentUser === undefined || currentUser === null ? (
+                <MainLayout page={-1}>
+                    <UnauthenticatedFeed />
+                </MainLayout>
+            ) : (
+                <div className="Feed_container">
+                    <MainLayout page={0}>
+                        <div className="FeedLayoutContent_container">
                             <div className="FeedLayoutContent_content">
                                 <Grid container spacing={0}>
                                     <Grid item lg={8}>
@@ -114,10 +115,10 @@ const Feed = () => {
                                     </Grid>
                                 </Grid>
                             </div>
-                        )}
-                    </div>
-                </MainLayout>
-            </div>
+                        </div>
+                    </MainLayout>
+                </div>
+            )}
         </div>
     );
 };

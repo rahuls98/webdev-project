@@ -1,5 +1,5 @@
 import "./style.css";
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 import List from "@mui/joy/List";
 import DynamicFeedIcon from "@mui/icons-material/DynamicFeed";
 import VideoCameraFrontOutlinedIcon from "@mui/icons-material/VideoCameraFrontOutlined";
@@ -7,8 +7,10 @@ import ChecklistRtlOutlinedIcon from "@mui/icons-material/ChecklistRtlOutlined";
 import BookmarkAddedOutlinedIcon from "@mui/icons-material/BookmarkAddedOutlined";
 import SidebarMenuItem from "../SidebarMenuItem";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
+import {useSelector} from "react-redux";
 
 const SidebarMenu = (props) => {
+    const {currentUser} = useSelector((state) => state.user);
     return (
         <div className="SidebarMenu_container">
             <List
@@ -20,44 +22,65 @@ const SidebarMenu = (props) => {
                     },
                 }}
             >
-                <Link to="/feed" style={{ textDecoration: "none" }}>
-                    <SidebarMenuItem
-                        itemIcon={<DynamicFeedIcon />}
-                        itemTitle="Feed"
-                        selected={props.selected === 0}
-                    />
-                </Link>
-                <Link to="/sessions" style={{ textDecoration: "none" }}>
-                    <SidebarMenuItem
-                        itemIcon={<VideoCameraFrontOutlinedIcon />}
-                        itemTitle="Sessions"
-                        selected={props.selected === 1}
-                    />
-                </Link>
-                <Link to="/following" style={{ textDecoration: "none" }}>
-                    <SidebarMenuItem
-                        itemIcon={<ChecklistRtlOutlinedIcon />}
-                        itemTitle="Following"
-                        selected={props.selected === 2}
-                    />
-                </Link>
-                <Link to="/saved" style={{ textDecoration: "none" }}>
-                    <SidebarMenuItem
-                        itemIcon={<BookmarkAddedOutlinedIcon />}
-                        itemTitle="Saved"
-                        selected={props.selected === 3}
-                    />
-                </Link>
-                <Link to="/explore" style={{ textDecoration: "none" }}>
-                    <SidebarMenuItem
-                        itemIcon={<SearchOutlinedIcon />}
-                        itemTitle="Explore"
-                        selected={props.selected === 4}
-                    />
-                </Link>
+                {(currentUser === undefined || currentUser === null) ?
+                    <div>
+                        <Link to="/login" style={{textDecoration: "none"}}>
+                            <SidebarMenuItem
+                                itemIcon={<DynamicFeedIcon/>}
+                                itemTitle="Login"
+                                selected={props.selected === 0}
+                            />
+                        </Link>
+                        <Link to="/register" style={{textDecoration: "none"}}>
+                            <SidebarMenuItem
+                                itemIcon={<DynamicFeedIcon/>}
+                                itemTitle="Signup"
+                                selected={props.selected === 1}
+                            />
+                        </Link>
+                    </div>
+                    :
+                    <div>
+                        <Link to="/feed" style={{textDecoration: "none"}}>
+                            <SidebarMenuItem
+                                itemIcon={<DynamicFeedIcon/>}
+                                itemTitle="Feed"
+                                selected={props.selected === 0}
+                            />
+                        </Link>
+                        <Link to="/sessions" style={{textDecoration: "none"}}>
+                            <SidebarMenuItem
+                                itemIcon={<VideoCameraFrontOutlinedIcon/>}
+                                itemTitle="Sessions"
+                                selected={props.selected === 1}
+                            />
+                        </Link>
+                        <Link to="/following" style={{textDecoration: "none"}}>
+                            <SidebarMenuItem
+                                itemIcon={<ChecklistRtlOutlinedIcon/>}
+                                itemTitle="Following"
+                                selected={props.selected === 2}
+                            />
+                        </Link>
+                        <Link to="/saved" style={{textDecoration: "none"}}>
+                            <SidebarMenuItem
+                                itemIcon={<BookmarkAddedOutlinedIcon/>}
+                                itemTitle="Saved"
+                                selected={props.selected === 3}
+                            />
+                        </Link>
+                        <Link to="/explore" style={{textDecoration: "none"}}>
+                            <SidebarMenuItem
+                                itemIcon={<SearchOutlinedIcon/>}
+                                itemTitle="Explore"
+                                selected={props.selected === 4}
+                            />
+                        </Link>
+                    </div>}
             </List>
         </div>
-    );
+    )
+        ;
 };
 
 export default SidebarMenu;

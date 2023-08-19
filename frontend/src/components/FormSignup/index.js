@@ -13,6 +13,8 @@ import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
+import {useDispatch} from "react-redux";
+import {registerThunk} from "../../services/auth-thunks";
 
 const FormSignup = (props) => {
     // eslint-disable-next-line
@@ -28,6 +30,7 @@ const FormSignup = (props) => {
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setConfirmShowPassword] = useState(false);
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -60,7 +63,8 @@ const FormSignup = (props) => {
             return;
         }
         if (fullname && email && password && confirmPassword) {
-            // Register
+            await dispatch(registerThunk({ email, password , fullname,role}));
+            navigate("/feed");
         }
     };
 

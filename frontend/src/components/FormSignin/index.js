@@ -8,6 +8,8 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import IconButton from "@mui/material/IconButton";
 import InputAdornment from "@mui/material/InputAdornment";
+import {loginThunk} from "../../services/auth-thunks";
+import {useDispatch} from "react-redux";
 
 const FormSignin = (props) => {
     const [email, setEmail] = useState("");
@@ -16,6 +18,7 @@ const FormSignin = (props) => {
     const [showPassword, setShowPassword] = useState(false);
     const [passwordError, setPasswordError] = useState(false);
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -33,7 +36,12 @@ const FormSignin = (props) => {
             setPasswordError(true);
         }
         if (email && password) {
-            // Login
+            try {
+                await dispatch(loginThunk({ email, password }));
+                navigate("/feed");
+            } catch (e) {
+                alert(e);
+            }
         }
     };
 

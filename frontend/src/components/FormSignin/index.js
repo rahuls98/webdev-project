@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useNavigate } from "react-router";
 import "./style.css";
 import TextField from "@mui/material/TextField";
@@ -11,6 +11,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 import { loginThunk } from "../../services/auth-thunks";
 import { useDispatch } from "react-redux";
 import { setPage } from "../../reducers/navigation-reducer";
+import MessageModalContext from "../../services/message-modal-context";
 
 const FormSignin = (props) => {
     const [email, setEmail] = useState("");
@@ -20,6 +21,8 @@ const FormSignin = (props) => {
     const [passwordError, setPasswordError] = useState(false);
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const { setMessageModalContent, messageModalHandleOpen } =
+        useContext(MessageModalContext);
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -42,7 +45,8 @@ const FormSignin = (props) => {
                 dispatch(setPage(0));
                 navigate("/feed");
             } catch (e) {
-                alert(e);
+                messageModalHandleOpen(true);
+                setMessageModalContent(e.message);
             }
         }
     };

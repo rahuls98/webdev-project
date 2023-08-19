@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
 import "./style.css";
 import Button from "@mui/joy/Button";
 import Modal from "@mui/joy/Modal";
@@ -77,13 +77,19 @@ const ModalPostCreate = () => {
                                 key={index}
                                 label={topic}
                                 withMargin
+                                onClick={() => {}}
                                 onDelete={() => handleTopicDeletion(index)}
                             />
                         ))}
                     </div>
                     <div className="ModalPostCreate_actions">
                         <div className="ModalPostCreate_cancel">
-                            <Button variant="outlined">Cancel</Button>
+                            <Button
+                                variant="outlined"
+                                onClick={() => setModalOpen(false)}
+                            >
+                                Cancel
+                            </Button>
                         </div>
                         <div className="ModalPostCreate_post">
                             <Button

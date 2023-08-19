@@ -1,7 +1,7 @@
 import "./style.css";
 import SearchIcon from "@mui/icons-material/Search";
-import medicalDictionary from "../../utils/medicalDictionary";
-import medicalAbbreviations from "../../utils/medicalAbbreviations";
+import medicalDictionary from "../../utils/medical-dictionary";
+import medicalAbbreviations from "../../utils/medical-abbreviations";
 import Autocomplete, { createFilterOptions } from "@mui/joy/Autocomplete";
 
 const searchOptions = [...medicalDictionary, ...medicalAbbreviations];

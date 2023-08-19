@@ -1,7 +1,11 @@
+import { useContext } from "react";
 import "./style.css";
 import Chip from "@mui/material/Chip";
+import TagClickContext from "../../services/tag-click-context";
 
 const TopicChip = (props) => {
+    const { onTagClick } = useContext(TagClickContext);
+
     return (
         <div
             className={"TopicChip_container".concat(
@@ -16,7 +20,9 @@ const TopicChip = (props) => {
                 }
                 variant="outlined"
                 size="small"
-                onClick={() => {}}
+                onClick={() =>
+                    props.onClick ? props.onClick() : onTagClick(props.label)
+                }
                 onDelete={props.onDelete ? () => props.onDelete() : null}
             />
         </div>

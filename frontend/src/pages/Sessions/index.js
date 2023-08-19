@@ -20,6 +20,7 @@ const Sessions = () => {
             description: "Session description",
             sessionDate: "June 10 2023",
             sessionTime: "10:00 AM",
+            // complete: true,
         },
     ]);
 

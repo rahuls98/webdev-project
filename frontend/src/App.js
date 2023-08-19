@@ -1,3 +1,4 @@
+import { useState } from "react";
 import "./App.css";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Feed from "./pages/Feed";
@@ -12,34 +13,58 @@ import { Provider } from "react-redux";
 import authReducer from "./reducers/auth-reducer";
 import AdminVerifyFeed from "./pages/AdminVerifyFeed";
 import navigationReducer from "./reducers/navigation-reducer";
+import ModalMessage from "./components/ModalMessage";
+import MessageModalContext from "./services/message-modal-context";
+import LiveStream from "./pages/LiveStream";
 import unverifiedExpertReducer from "./reducers/unverified-experts-reducer";
 
 const store = configureStore({
     reducer: {
         user: authReducer,
         page: navigationReducer,
-        unverifiedExperts : unverifiedExpertReducer
+        unverifiedExperts: unverifiedExpertReducer,
     },
 });
 
 function App() {
+    const [messageModalOpen, setMessageModalOpen] = useState(false);
+    const [messageModalContent, setMessageModalContent] = useState("");
+    const messageModalHandleOpen = () => setMessageModalOpen(true);
+    const messageModalHandleClose = () => setMessageModalOpen(false);
+
     return (
         <Provider store={store}>
-            <div className="App">
-                <BrowserRouter>
-                    <Routes>
-                        <Route path="/" element={<Navigate to="/feed"/>}/>
-                        <Route path="/login" element={<Login/>}/>
-                        <Route path="/register" element={<Register/>}/>
-                        <Route path="/feed" element={<Feed/>}/>
-                        <Route path="/adminVerifyFeed" element={<AdminVerifyFeed/>}/>
-                        <Route path="/sessions" element={<Sessions/>}/>
-                        <Route path="/following" element={<Following/>}/>
-                        <Route path="/saved" element={<Saved/>}/>
-                        <Route path="/explore" element={<Explore/>}/>
-                    </Routes>
-                </BrowserRouter>
-            </div>
+            <MessageModalContext.Provider
+                value={{
+                    setMessageModalContent: setMessageModalContent,
+                    messageModalHandleOpen: messageModalHandleOpen,
+                }}
+            >
+                <ModalMessage
+                    open={messageModalOpen}
+                    handleClose={messageModalHandleClose}
+                    message={messageModalContent}
+                />
+                <div className="App">
+                    <BrowserRouter>
+                        <Routes>
+                            <Route path="/" element={<Navigate to="/feed" />} />
+                            <Route path="/login" element={<Login />} />
+                            <Route path="/register" element={<Register />} />
+                            <Route path="/feed" element={<Feed />} />
+                            <Route path="/sessions" element={<Sessions />} />
+                            <Route path="/following" element={<Following />} />
+                            <Route path="/saved" element={<Saved />} />
+                            <Route path="/explore" element={<Explore />} />
+                            <Route path="/live" element={<LiveStream />} />
+                            <Route
+                                path="/admin-verify-feed"
+                                element={<AdminVerifyFeed />}
+                            />
+                        </Routes>
+                    </BrowserRouter>
+                </div>
+            </MessageModalContext.Provider>
         </Provider>
     );
 }

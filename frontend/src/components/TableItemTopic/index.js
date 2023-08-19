@@ -2,6 +2,8 @@ import { useState } from "react";
 import "./style.css";
 import ListItem from "@mui/material/ListItem";
 import Divider from "@mui/material/Divider";
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
 import ListItemText from "@mui/material/ListItemText";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
@@ -15,15 +17,26 @@ const TableItemTopic = (props) => {
     const [itemAction, setItemAction] = useState(
         props.following ? "Unfollow" : "Follow"
     );
+    const [snackbar, setSnackbar] = useState(false);
+    const [snackbarMessage, setSnackbarMessage] = useState("Unfollowed");
 
     const handleActionClick = async () => {
-        // if (itemAction === "Unfollow") {
-        //     await topicApis.unfollowTopic({ topic: props.topicId });
-        //     setItemAction("Follow");
-        // } else if (itemAction === "Follow") {
-        //     await topicApis.followTopic({ topic: props.topicId });
-        //     setItemAction("Unfollow");
-        // }
+        if (itemAction === "Unfollow") {
+            setSnackbarMessage("Unfollowed");
+            // await topicApis.unfollowTopic({ topic: props.topicId });
+            setItemAction("Follow");
+        } else if (itemAction === "Follow") {
+            setSnackbarMessage("Followed");
+            // await topicApis.followTopic({ topic: props.topicId });
+            setItemAction("Unfollow");
+        }
+    };
+
+    const handleSnackbarClose = (event, reason) => {
+        if (reason === "clickaway") {
+            return;
+        }
+        setSnackbar(false);
     };
 
     return (
@@ -52,6 +65,20 @@ const TableItemTopic = (props) => {
                 </ListItem>
             </div>
             {props.lastItem ? null : <Divider variant="inset" component="li" />}
+            <Snackbar
+                open={snackbar}
+                autoHideDuration={1000}
+                onClose={handleSnackbarClose}
+            >
+                <Alert
+                    icon={false}
+                    onClose={handleSnackbarClose}
+                    severity="info"
+                    sx={{ width: "100%" }}
+                >
+                    {snackbarMessage}
+                </Alert>
+            </Snackbar>
         </div>
     );
 };

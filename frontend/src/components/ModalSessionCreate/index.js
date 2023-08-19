@@ -36,17 +36,18 @@ const ModalSessionCreate = () => {
     };
 
     const handleSubmit = async () => {
-        // const dateString = datetimeUtils.dateToReadableString(date.$d);
-        // const timeString = datetimeUtils.timeToReadableString(time.$d);
-        // const sessionData = {
-        //     title,
-        //     description,
-        //     date: dateString,
-        //     time: timeString,
-        //     topics,
-        // };
+        const dateString = datetimeUtils.dateToReadableString(date.$d);
+        const timeString = datetimeUtils.timeToReadableString(time.$d);
+        // eslint-disable-next-line
+        const sessionData = {
+            title,
+            description,
+            date: dateString,
+            time: timeString,
+            topics,
+        };
         // await sessionApis.createSession(sessionData);
-        // setModalOpen(false);
+        setModalOpen(false);
     };
 
     return (
@@ -100,13 +101,19 @@ const ModalSessionCreate = () => {
                                 key={index}
                                 label={topic}
                                 withMargin
+                                onClick={() => {}}
                                 onDelete={() => handleTopicDeletion(index)}
                             />
                         ))}
                     </div>
                     <div className="ModalSessionCreate_actions">
                         <div className="ModalSessionCreate_cancel">
-                            <Button variant="outlined">Cancel</Button>
+                            <Button
+                                variant="outlined"
+                                onClick={() => setModalOpen(false)}
+                            >
+                                Cancel
+                            </Button>
                         </div>
                         <div className="ModalSessionCreate_create">
                             <Button

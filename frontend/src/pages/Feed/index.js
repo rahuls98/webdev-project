@@ -10,11 +10,11 @@ import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
-import {useSelector} from "react-redux";
+import { useSelector } from "react-redux";
 import UnauthenticatedFeed from "../../components/UnauthenticatedFeed";
 
 const Feed = () => {
-    const {currentUser} = useSelector((state) => state.user);
+    const { currentUser } = useSelector((state) => state.user);
     const [tab, setTab] = useState("1");
     // eslint-disable-next-line
     const [posts, setPosts] = useState([
@@ -59,17 +59,23 @@ const Feed = () => {
 
     return (
         <div>
-                <div className="Feed_container">
-                    <MainLayout page={0}>
-                        <div className="FeedLayoutContent_container">
-                            {(currentUser === undefined || currentUser === null) ? <UnauthenticatedFeed/> :
+            <div className="Feed_container">
+                <MainLayout page={0}>
+                    <div className="FeedLayoutContent_container">
+                        {console.log(currentUser)}
+                        {currentUser === undefined || currentUser === null ? (
+                            <UnauthenticatedFeed />
+                        ) : (
                             <div className="FeedLayoutContent_content">
                                 <Grid container spacing={0}>
                                     <Grid item lg={8}>
                                         <TabContext value={tab}>
                                             <TabList onChange={handleTabChange}>
                                                 <Tab label="Posts" value="1" />
-                                                <Tab label="Sessions" value="2" />
+                                                <Tab
+                                                    label="Sessions"
+                                                    value="2"
+                                                />
                                             </TabList>
                                             <TabPanel value="1">
                                                 {posts.length === 0 ? (
@@ -91,8 +97,12 @@ const Feed = () => {
                                                     sessions.map((session) => (
                                                         <FeedSession
                                                             key={session._id}
-                                                            session={session._doc}
-                                                            enrolled={session.enrolled}
+                                                            session={
+                                                                session._doc
+                                                            }
+                                                            enrolled={
+                                                                session.enrolled
+                                                            }
                                                         />
                                                     ))
                                                 )}
@@ -103,10 +113,11 @@ const Feed = () => {
                                         <FeedTrending />
                                     </Grid>
                                 </Grid>
-                            </div>}
-                        </div>
-                    </MainLayout>
-                </div>
+                            </div>
+                        )}
+                    </div>
+                </MainLayout>
+            </div>
         </div>
     );
 };

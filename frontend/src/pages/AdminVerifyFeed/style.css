@@ -1,0 +1,33 @@
+.FeedLayoutContent_container {
+    height: calc(100vh - 70px);
+    box-sizing: border-box;
+}
+
+.FeedLayoutContent_content {
+    box-sizing: border-box;
+    height: 100%;
+    overflow: scroll;
+    padding: 10px 10px 0 10px;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+
+.FeedLayoutContent_content::-webkit-scrollbar {
+    display: none;
+}
+
+.FeedLayoutContent_container .MuiTabs-root {
+    margin: 0 24px 0 24px;
+}
+
+.FeedLayoutContent_container .MuiTab-root {
+    text-transform: capitalize;
+}
+
+.FeedLayoutContent_container .MuiTab-root.Mui-selected {
+    color: var(--text-highlight);
+}
+
+.FeedLayoutContent_container .MuiTabs-indicator {
+    background-color: var(--text-highlight);
+}

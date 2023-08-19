@@ -16,6 +16,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import { useSelector } from "react-redux";
 // import vaultApis from "../../apis/vault";
 import MessageModalContext from "../../services/message-modal-context";
+import { useNavigate } from "react-router";
 
 const SessionCard = (props) => {
     const { currentUser } = useSelector((state) => state.user);
@@ -23,11 +24,11 @@ const SessionCard = (props) => {
         useContext(MessageModalContext);
     const [anchorEl, setAnchorEl] = useState(null);
     const actionsMenuOpen = Boolean(anchorEl);
-    // const hmsActions = useHMSActions();
+    const hmsActions = useHMSActions();
+    const navigate = useNavigate();
 
     const getDate = () => {
         let dateString = props.session?.sessionDate;
-        // eslint-disable-next-line
         const [month, date, year] = dateString.split(" ");
         return `${month} ${date}`;
     };
@@ -54,37 +55,37 @@ const SessionCard = (props) => {
             setMessageModalContent("This session has already finished!");
             return;
         }
-        // const userName = userUtils.getUserName();
-        // const userRole = userUtils.getRole();
-        // let hmsRole = "";
-        // if (userRole === "User" || props.session?.author !== userUtils.getUserId()) {
-        //     hmsRole = "hls-viewer";
-        // } else if (userRole === "Expert") {
-        //     hmsRole = "broadcaster";
-        // }
-        // let vaultResponse;
-        // try {
-        //     vaultResponse = await vaultApis.getHmsAuth();
-        // } catch (err) {
-        //     console.log(err);
-        // }
-        // const { HMS_ROOM_ID, HMS_TOKEN_ENDPOINT } = vaultResponse;
-        // const response = await fetch(`${HMS_TOKEN_ENDPOINT}api/token`, {
-        //     method: "POST",
-        //     body: JSON.stringify({
-        //         user_id: `${Date.now()}`,
-        //         role: hmsRole,
-        //         type: "app",
-        //         room_id: HMS_ROOM_ID,
-        //     }),
-        // })
-        // const { token } = await response.json();
+        const userName = currentUser.fullname;
+        const userRole = currentUser.role;
+        let hmsRole = "";
+        if (userRole === "User" || props.session?.author !== currentUser._id) {
+            hmsRole = "hls-viewer";
+        } else if (userRole === "Expert") {
+            hmsRole = "broadcaster";
+        }
+        let vaultResponse;
+        try {
+            vaultResponse = await vaultApis.getHmsAuth();
+        } catch (err) {
+            console.log(err);
+        }
+        const { HMS_ROOM_ID, HMS_TOKEN_ENDPOINT } = vaultResponse;
+        const response = await fetch(`${HMS_TOKEN_ENDPOINT}api/token`, {
+            method: "POST",
+            body: JSON.stringify({
+                user_id: `${Date.now()}`,
+                role: hmsRole,
+                type: "app",
+                room_id: HMS_ROOM_ID,
+            }),
+        });
+        const { token } = await response.json();
 
-        // hmsActions.join({
-        //     userName: userName,
-        //     authToken: token,
-        // });
-        // props.setLayout(2);
+        hmsActions.join({
+            userName: userName,
+            authToken: token,
+        });
+        useNavigate("/live");
     };
 
     return (

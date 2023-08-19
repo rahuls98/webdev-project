@@ -14,6 +14,7 @@ import authReducer from "./reducers/auth-reducer";
 import navigationReducer from "./reducers/navigation-reducer";
 import ModalMessage from "./components/ModalMessage";
 import MessageModalContext from "./services/message-modal-context";
+import LiveStream from "./pages/LiveStream";
 
 const store = configureStore({
     reducer: {
@@ -52,6 +53,7 @@ function App() {
                             <Route path="/following" element={<Following />} />
                             <Route path="/saved" element={<Saved />} />
                             <Route path="/explore" element={<Explore />} />
+                            <Route path="/live" element={<LiveStream />} />
                         </Routes>
                     </BrowserRouter>
                 </div>

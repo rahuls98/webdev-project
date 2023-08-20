@@ -42,8 +42,8 @@ const FormSignin = (props) => {
         if (email && password) {
             try {
                 await dispatch(loginThunk({ email, password }));
-                dispatch(setPage(0));
-                navigate("/feed");
+                dispatch(setPage(-2));
+                navigate("/profile");
             } catch (e) {
                 messageModalHandleOpen(true);
                 setMessageModalContent(e.message);

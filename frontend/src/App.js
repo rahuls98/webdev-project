@@ -59,7 +59,7 @@ function App() {
                             <Route path="/explore" element={<Explore />} />
                             <Route path="/live" element={<LiveStream />} />
                             <Route
-                                path="/admin-verify-feed"
+                                path="/verify"
                                 element={<AdminVerifyFeed />}
                             />
                             <Route path="/profile" element={<ProfilePage />} />

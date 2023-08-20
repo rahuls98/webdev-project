@@ -10,6 +10,7 @@ import SidebarMenuItem from "../SidebarMenuItem";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import { useSelector, useDispatch } from "react-redux";
 import { setPage } from "../../reducers/navigation-reducer";
+import HowToRegIcon from "@mui/icons-material/HowToReg";
 
 const SidebarMenu = () => {
     const { currentUser } = useSelector((state) => state.user);
@@ -52,57 +53,83 @@ const SidebarMenu = () => {
                     </div>
                 ) : (
                     <div>
-                        <Link to="/feed" style={{ textDecoration: "none" }}>
+                        <Link to="/profile" style={{ textDecoration: "none" }}>
                             <SidebarMenuItem
-                                itemIcon={<DynamicFeedIcon />}
-                                itemTitle="Feed"
-                                selected={page === 0}
-                                onClick={() => handlePageChange(0)}
+                                itemIcon={<PersonOutlineIcon />}
+                                itemTitle="Profile"
+                                selected={page === -2}
+                                onClick={() => handlePageChange(6)}
                             />
                         </Link>
-                        <Link to="/sessions" style={{ textDecoration: "none" }}>
-                            <SidebarMenuItem
-                                itemIcon={<VideoCameraFrontOutlinedIcon />}
-                                itemTitle="Sessions"
-                                selected={page === 1}
-                                onClick={() => handlePageChange(1)}
-                            />
-                        </Link>
-                        <Link
-                            to="/following"
-                            style={{ textDecoration: "none" }}
-                        >
-                            <SidebarMenuItem
-                                itemIcon={<ChecklistRtlOutlinedIcon />}
-                                itemTitle="Following"
-                                selected={page === 2}
-                                onClick={() => handlePageChange(2)}
-                            />
-                        </Link>
-                        <Link to="/saved" style={{ textDecoration: "none" }}>
-                            <SidebarMenuItem
-                                itemIcon={<BookmarkAddedOutlinedIcon />}
-                                itemTitle="Saved"
-                                selected={page === 3}
-                                onClick={() => handlePageChange(3)}
-                            />
-                        </Link>
-                        <Link to="/explore" style={{ textDecoration: "none" }}>
-                            <SidebarMenuItem
-                                itemIcon={<SearchOutlinedIcon />}
-                                itemTitle="Explore"
-                                selected={page === 4}
-                                onClick={() => handlePageChange(4)}
-                            />
-                        </Link>
+                        {currentUser.role !== "Admin" ? (
+                            <>
+                                <Link
+                                    to="/feed"
+                                    style={{ textDecoration: "none" }}
+                                >
+                                    <SidebarMenuItem
+                                        itemIcon={<DynamicFeedIcon />}
+                                        itemTitle="Feed"
+                                        selected={page === 0}
+                                        onClick={() => handlePageChange(0)}
+                                    />
+                                </Link>
+                                <Link
+                                    to="/sessions"
+                                    style={{ textDecoration: "none" }}
+                                >
+                                    <SidebarMenuItem
+                                        itemIcon={
+                                            <VideoCameraFrontOutlinedIcon />
+                                        }
+                                        itemTitle="Sessions"
+                                        selected={page === 1}
+                                        onClick={() => handlePageChange(1)}
+                                    />
+                                </Link>
+                                <Link
+                                    to="/following"
+                                    style={{ textDecoration: "none" }}
+                                >
+                                    <SidebarMenuItem
+                                        itemIcon={<ChecklistRtlOutlinedIcon />}
+                                        itemTitle="Following"
+                                        selected={page === 2}
+                                        onClick={() => handlePageChange(2)}
+                                    />
+                                </Link>
+                                <Link
+                                    to="/saved"
+                                    style={{ textDecoration: "none" }}
+                                >
+                                    <SidebarMenuItem
+                                        itemIcon={<BookmarkAddedOutlinedIcon />}
+                                        itemTitle="Saved"
+                                        selected={page === 3}
+                                        onClick={() => handlePageChange(3)}
+                                    />
+                                </Link>
+                                <Link
+                                    to="/explore"
+                                    style={{ textDecoration: "none" }}
+                                >
+                                    <SidebarMenuItem
+                                        itemIcon={<SearchOutlinedIcon />}
+                                        itemTitle="Explore"
+                                        selected={page === 4}
+                                        onClick={() => handlePageChange(4)}
+                                    />
+                                </Link>
+                            </>
+                        ) : null}
                         {currentUser.role === "Admin" ? (
                             <Link
-                                to="/admin-verify-feed"
+                                to="/verify"
                                 style={{ textDecoration: "none" }}
                             >
                                 <SidebarMenuItem
-                                    itemIcon={<SearchOutlinedIcon />}
-                                    itemTitle="Admin Verify"
+                                    itemIcon={<HowToRegIcon />}
+                                    itemTitle="Verify"
                                     selected={page === 5}
                                     onClick={() => handlePageChange(5)}
                                 />
@@ -110,15 +137,6 @@ const SidebarMenu = () => {
                         ) : (
                             <div></div>
                         )}
-
-                        <Link to="/profile" style={{ textDecoration: "none" }}>
-                            <SidebarMenuItem
-                                itemIcon={<PersonOutlineIcon />}
-                                itemTitle="Profile"
-                                selected={page === 6}
-                                onClick={() => handlePageChange(6)}
-                            />
-                        </Link>
                     </div>
                 )}
             </List>

@@ -26,7 +26,9 @@ const TableExperts = (props) => {
                             fullname={expert.fullname}
                             followerCount={expert.followerCount}
                             expertiseTopics={expert.expertiseTopics}
+                            actionText={props.actionText}
                             onActionClick={props.onActionClick}
+                            onActionClickHandler={props.onActionClickHandler}
                         />
                     ))}
                 </List>

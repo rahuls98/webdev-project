@@ -14,6 +14,7 @@ import {
     verifyExpertThunk,
 } from "../../services/unverified-experts-thunk";
 import UnauthenticatedFeed from "../../components/UnauthenticatedFeed";
+import TableExperts from "../../components/TableExperts";
 
 const AdminVerifyFeed = () => {
     const { currentUser } = useSelector((state) => state.user);
@@ -41,81 +42,23 @@ const AdminVerifyFeed = () => {
     };
 
     return (
-        <div className="Feed_container">
+        <div>
             {currentUser === undefined || currentUser === null ? (
                 <MainLayout page={-1}>
-                    <h1>Login as an Admin first</h1>
+                    <h1 style={{ textAlign: "center" }}>
+                        Login as an Admin first
+                    </h1>
                 </MainLayout>
             ) : (
                 <MainLayout page={0}>
-                    <div className="FeedLayoutContent_container">
-                        <div className="FeedLayoutContent_content">
-                            <Grid container spacing={0}>
-                                {unverifiedExperts.map((expert) => (
-                                    <div>
-                                        <div className="TableItemExpert_container">
-                                            <div className="TableItemExpert_listitem">
-                                                <ListItem
-                                                    alignItems="flex-start"
-                                                    secondaryAction={
-                                                        <Button
-                                                            variant="outlined"
-                                                            size="small"
-                                                            onClick={() =>
-                                                                handleVerifyListener(
-                                                                    expert._id
-                                                                )
-                                                            }
-                                                        >
-                                                            <RemoveCircleOutlinedIcon />
-                                                            Verify Expert
-                                                        </Button>
-                                                    }
-                                                >
-                                                    <ListItemAvatar>
-                                                        <Avatar>
-                                                            {expert.fullname.toUpperCase()}
-                                                        </Avatar>
-                                                    </ListItemAvatar>
-                                                    <ListItemText
-                                                        primary={
-                                                            expert.fullname
-                                                        }
-                                                        secondary={
-                                                            <div>
-                                                                <i
-                                                                    style={{
-                                                                        fontSize:
-                                                                            "13px",
-                                                                    }}
-                                                                >
-                                                                    Expertise:{" "}
-                                                                    {expert.expertiseTopics.join(
-                                                                        ", "
-                                                                    ).slice(0,36)}
-                                                                </i>
-                                                                <br />
-                                                                <i
-                                                                    style={{
-                                                                        fontSize:
-                                                                            "13px",
-                                                                    }}
-                                                                >
-                                                                    Followers:{" "}
-                                                                    {
-                                                                        expert.followerCount
-                                                                    }
-                                                                </i>
-                                                            </div>
-                                                        }
-                                                    />
-                                                </ListItem>
-                                            </div>
-                                        </div>
-                                    </div>
-                                ))}
-                            </Grid>
-                        </div>
+                    <div className="AdminVerify_container">
+                        <TableExperts
+                            data={unverifiedExperts}
+                            following={true}
+                            actionText="Verify"
+                            onActionClick={() => {}}
+                            onActionClickHandler={handleVerifyListener}
+                        />
                     </div>
                 </MainLayout>
             )}

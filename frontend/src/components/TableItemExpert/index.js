@@ -58,14 +58,24 @@ const TableItemExpert = (props) => {
                         <Button
                             variant="outlined"
                             size="small"
-                            onClick={() => handleActionClick()}
+                            onClick={() =>
+                                props.actionText
+                                    ? props.onActionClickHandler(props.expertId)
+                                    : handleActionClick()
+                            }
                         >
-                            {itemAction === "Unfollow" ? (
-                                <RemoveCircleOutlinedIcon />
+                            {props.actionText && props.actionText !== "" ? (
+                                props.actionText
                             ) : (
-                                <AddCircleOutlinedIcon />
+                                <>
+                                    {itemAction === "Unfollow" ? (
+                                        <RemoveCircleOutlinedIcon />
+                                    ) : (
+                                        <AddCircleOutlinedIcon />
+                                    )}
+                                    {itemAction}
+                                </>
                             )}
-                            {itemAction}
                         </Button>
                     }
                 >

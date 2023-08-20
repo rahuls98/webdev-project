@@ -1,6 +1,6 @@
 import express from "express";
 import PostModel from "../models/Post.js";
-import { isAuthenticated } from "../middleware/authorization.js";
+import {isAuthenticated, isAuthenticatedAndOwnerPost} from "../middleware/authorization.js";
 
 const router = express.Router();
 
@@ -92,5 +92,17 @@ router.put("/unsave", isAuthenticated, async (req, res) => {
         msg: "Success!",
     });
 });
+
+router.delete('/delete', isAuthenticatedAndOwnerPost, async (req, res) => {
+    try {
+        const postId = req.query.postId;
+        await PostModel.deletePostById(postId);
+        res.status(200).send({
+            "msg": "Success!"
+        })
+    } catch (error) {
+        console.log(error);
+    }
+})
 
 export default router;

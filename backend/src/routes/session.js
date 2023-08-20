@@ -1,6 +1,9 @@
 import express from "express";
 import SessionModel from "../models/Session.js";
-import {isAuthenticated} from "../middleware/authorization.js";
+import {
+    isAuthenticated,
+    isAuthenticatedAndOwnerSession
+} from "../middleware/authorization.js";
 
 const router = express.Router();
 
@@ -59,6 +62,18 @@ router.put('/complete', isAuthenticated, async (req, res) => {
     res.status(200).send({
         "msg": "Success!"
     });
+})
+
+router.delete('/delete', isAuthenticatedAndOwnerSession, async (req, res) => {
+    try {
+        const sessionId = req.query.sessionId;
+        await SessionModel.deleteSessionById(sessionId);
+        res.status(200).send({
+            "msg": "Success!"
+        })
+    } catch (error) {
+        console.log(error);
+    }
 })
 
 export default router;

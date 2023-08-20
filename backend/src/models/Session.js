@@ -116,6 +116,24 @@ const markSessionComplete = async (id) => {
     }
 };
 
+const getSessionsByAuthor = async (author) => {
+    try {
+        const sessions = await Session.find({author : author});
+        return sessions;
+    } catch (error) {
+        console.error("Error getSessionsByAuthor: ", error);
+    }
+}
+
+const deleteSessionById = async (sessionId) => {
+    try{
+        const response = await Session.deleteOne({_id : sessionId});
+        console.log(response);
+    }catch(error){
+        console.log(error);
+    }
+}
+
 const SessionModel = {
     createSession,
     readSessions,
@@ -125,6 +143,8 @@ const SessionModel = {
     addEnrollment,
     markSessionComplete,
     deleteEnrollment,
+    getSessionsByAuthor,
+    deleteSessionById
 };
 
 export default SessionModel;

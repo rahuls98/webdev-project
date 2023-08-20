@@ -30,8 +30,17 @@ const Feed = () => {
             setPosts(feed.posts);
             setSessions(feed.sessions);
         };
-        getUserFeed();
+        if (currentUser) getUserFeed();
     }, []);
+
+    const handleRefresh = () => {
+        const getUserFeed = async () => {
+            const feed = await feedApis.getUserFeed(currentUser?._id);
+            setPosts(feed.posts);
+            setSessions(feed.sessions);
+        };
+        if (currentUser) getUserFeed();
+    };
 
     return (
         <div>
@@ -63,6 +72,9 @@ const Feed = () => {
                                                             key={post._id}
                                                             post={post._doc}
                                                             saved={post.saved}
+                                                            onDelete={
+                                                                handleRefresh
+                                                            }
                                                         />
                                                     ))
                                                 )}
@@ -79,6 +91,9 @@ const Feed = () => {
                                                             }
                                                             enrolled={
                                                                 session.enrolled
+                                                            }
+                                                            onDelete={
+                                                                handleRefresh
                                                             }
                                                         />
                                                     ))

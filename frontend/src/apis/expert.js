@@ -13,7 +13,10 @@ const followExpert = async (data) => {
 };
 
 const unfollowExpert = async (data) => {
-    return await requestMethods.del("/expert/unfollow/", data);
+    return await requestMethods.del(
+        `/expert/unfollow/${data.expert}/${data.user}`,
+        data
+    );
 };
 
 const expertApis = {

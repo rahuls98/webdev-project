@@ -22,22 +22,29 @@ const Following = () => {
         setTab(newValue);
     };
 
+    const getFollowingExperts = async () => {
+        const experts = await followingApis.getFollowingExperts(
+            currentUser._id
+        );
+        let filteredExperts = experts.filter(
+            (expert) => expert._id != currentUser._id
+        );
+        setExperts(filteredExperts);
+    };
+    const getFollowingTopics = async () => {
+        const topics = await followingApis.getFollowingTopics(currentUser._id);
+        setTopics(topics);
+    };
+
     useEffect(() => {
-        const getFollowingExperts = async () => {
-            const experts = await followingApis.getFollowingExperts(
-                currentUser._id
-            );
-            setExperts(experts);
-        };
-        const getFollowingTopics = async () => {
-            const topics = await followingApis.getFollowingTopics(
-                currentUser._id
-            );
-            setTopics(topics);
-        };
         getFollowingExperts();
         getFollowingTopics();
     }, [currentUser._id]);
+
+    const handleExpertsActionClick = () => {
+        getFollowingExperts();
+        getFollowingTopics();
+    };
 
     return (
         <div className="Following_container">
@@ -56,12 +63,14 @@ const Following = () => {
                                     <TableExperts
                                         data={experts}
                                         following={true}
+                                        onActionClick={handleExpertsActionClick}
                                     />
                                 </TabPanel>
                                 <TabPanel value="2">
                                     <TableTopics
                                         data={topics}
                                         following={true}
+                                        onActionClick={handleExpertsActionClick}
                                     />
                                 </TabPanel>
                             </TabContext>

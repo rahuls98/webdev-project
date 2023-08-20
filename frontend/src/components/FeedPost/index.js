@@ -58,6 +58,7 @@ const FeedPost = (props) => {
 
     const handleDeletePost = async (postId) => {
         await postApis.deletePost(postId);
+        props.onDelete();
     };
 
     const handleVoteOnClick = async (action) => {
@@ -156,7 +157,9 @@ const FeedPost = (props) => {
                     dangerouslySetInnerHTML={{ __html: props.post?.content }}
                 />
                 {currentUser.role === "User" ||
-                props.post?.author._id === currentUser._id ? null : (
+                props.post?.author._id === currentUser._id ||
+                (currentUser.role === "Expert" &&
+                    !currentUser.isVerified) ? null : (
                     <div className="FeedPost_vote">
                         <div>
                             <div

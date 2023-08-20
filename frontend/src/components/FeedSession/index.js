@@ -45,6 +45,7 @@ const FeedSession = (props) => {
 
     const handleDeleteSession = async (sessionId) => {
         await sessionApis.deleteSession(sessionId);
+        props.onDelete();
     };
 
     return (

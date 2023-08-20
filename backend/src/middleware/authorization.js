@@ -2,7 +2,6 @@ import "express";
 import PostModel from "../models/Post.js";
 import SessionModel from "../models/Session.js";
 
-
 export const isAuthenticated = async (req, res, next) => {
     if (
         req.session.currentUser === null ||
@@ -44,7 +43,6 @@ export const isAuthenticatedAdmin = async (req, res, next) => {
     next();
 };
 
-
 export const isAuthenticatedAndOwnerPost = async (req, res, next) => {
     if (
         req.session.currentUser === null ||
@@ -59,19 +57,16 @@ export const isAuthenticatedAndOwnerPost = async (req, res, next) => {
         return;
     }
     const postId = req.query.postId;
-    console.log(postId + " Got this from frontend for validation");
-    let posts = [...await PostModel.getPostsByAuthor(req.session.currentUser._id)];
-    console.log(posts);
-    let filteredPosts = posts.filter((post)  => post._id.equals(postId));
-    console.log(filteredPosts + " Filtered Results");
-    console.log(filteredPosts.length);
+    let posts = [
+        ...(await PostModel.getPostsByAuthor(req.session.currentUser._id)),
+    ];
+    let filteredPosts = posts.filter((post) => post._id.equals(postId));
     if (filteredPosts.length === 0) {
         res.status(401).send("Unauthorized! Expert not an owner of the post");
         return;
     }
     next();
-}
-
+};
 
 export const isAuthenticatedAndOwnerSession = async (req, res, next) => {
     if (
@@ -87,11 +82,19 @@ export const isAuthenticatedAndOwnerSession = async (req, res, next) => {
         return;
     }
     const sessionId = req.query.sessionId;
-    let sessions = [...await SessionModel.getSessionsByAuthor(req.session.currentUser._id)];
-    let filteredSessions = sessions.filter((session) => session._id.equals(sessionId));
+    let sessions = [
+        ...(await SessionModel.getSessionsByAuthor(
+            req.session.currentUser._id
+        )),
+    ];
+    let filteredSessions = sessions.filter((session) =>
+        session._id.equals(sessionId)
+    );
     if (filteredSessions.length === 0) {
-        res.status(401).send("Unauthorized! Expert not an owner of the Session");
+        res.status(401).send(
+            "Unauthorized! Expert not an owner of the Session"
+        );
         return;
     }
     next();
-}
+};

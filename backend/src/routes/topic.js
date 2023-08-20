@@ -34,13 +34,17 @@ router.post("/follow", isAuthenticated, async (req, res) => {
     }
 });
 
-router.delete("/unfollow", isAuthenticated, async (req, res) => {
-    const userId = req.body.user;
-    const topicId = req.body.topic;
-    await UserFollowingTopicModel.deleteUserFollowingTopic(userId, topicId);
-    res.status(200).send({
-        msg: "Success!",
-    });
-});
+router.delete(
+    "/unfollow/:topicId/:userId",
+    isAuthenticated,
+    async (req, res) => {
+        const userId = req.params.userId;
+        const topicId = req.params.topicId;
+        await UserFollowingTopicModel.deleteUserFollowingTopic(userId, topicId);
+        res.status(200).send({
+            msg: "Success!",
+        });
+    }
+);
 
 export default router;

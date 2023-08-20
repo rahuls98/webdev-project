@@ -24,7 +24,7 @@ const createPost = async (author, profilePhoto, topics, content) => {
 
 const readPosts = async (user) => {
     try {
-        return await Post.find({ savedBy: { $ne: user } }).populate("author");
+        return await Post.find({savedBy: {$ne: user}}).populate("author");
     } catch (error) {
         console.error("Error readPosts: ", error);
     }
@@ -33,15 +33,15 @@ const readPosts = async (user) => {
 const readPostsByAuthors = async (authors, user) => {
     try {
         const posts = await Post.find(
-            { author: { $in: authors } },
+            {author: {$in: authors}},
             {},
-            { createdDate: -1 }
+            {createdDate: -1}
         ).populate({
             path: "author",
             model: "Expert",
         });
         const postsWithSavedInfo = posts.map((post) => {
-            const updatedPost = { ...post };
+            const updatedPost = {...post};
             if (post.savedBy.includes(new mongoose.Types.ObjectId(user))) {
                 updatedPost["saved"] = true;
             }
@@ -53,9 +53,18 @@ const readPostsByAuthors = async (authors, user) => {
     }
 };
 
+const getPostsByAuthor = async (author) => {
+    try {
+        const posts = await Post.find({author : author});
+        return posts;
+    } catch (error) {
+        console.error("Error getPostsByAuthor: ", error);
+    }
+}
+
 const searchPostsByTopic = async (topic) => {
     try {
-        const posts = await Post.find({ topics: topic }).populate("author");
+        const posts = await Post.find({topics: topic}).populate("author");
         return posts;
     } catch (error) {
         console.error("Error searchPostsByTopic: ", error);
@@ -64,7 +73,7 @@ const searchPostsByTopic = async (topic) => {
 
 const createSavedPost = async (user, post) => {
     try {
-        await Post.updateOne({ _id: post }, { $push: { savedBy: user } });
+        await Post.updateOne({_id: post}, {$push: {savedBy: user}});
     } catch (error) {
         console.error("Error createSavedPost: ", error);
     }
@@ -72,7 +81,7 @@ const createSavedPost = async (user, post) => {
 
 const readUserSavedPosts = async (user) => {
     try {
-        const posts = await Post.find({ savedBy: user }).populate("author");
+        const posts = await Post.find({savedBy: user}).populate("author");
         return posts;
     } catch (error) {
         console.error("Error readUserSavedPosts: ", error);
@@ -81,7 +90,7 @@ const readUserSavedPosts = async (user) => {
 
 const deleteSavedPost = async (user, post) => {
     try {
-        await Post.updateOne({ _id: post }, { $pull: { savedBy: user } });
+        await Post.updateOne({_id: post}, {$pull: {savedBy: user}});
     } catch (error) {
         console.error("Error deleteSavedPost: ", error);
     }
@@ -95,11 +104,11 @@ const upvotePost = async (post, expert) => {
         });
         if (expertInDownvotes.length !== 0) {
             await Post.updateOne(
-                { _id: post },
-                { $pull: { downvotes: expert } }
+                {_id: post},
+                {$pull: {downvotes: expert}}
             );
         }
-        await Post.updateOne({ _id: post }, { $push: { upvotes: expert } });
+        await Post.updateOne({_id: post}, {$push: {upvotes: expert}});
     } catch (error) {
         console.error("Error upvotePost: ", error);
     }
@@ -107,9 +116,9 @@ const upvotePost = async (post, expert) => {
 
 const removePostUpvote = async (post, expert) => {
     try {
-        const expertInUpvotes = await Post.find({ _id: post, upvotes: expert });
+        const expertInUpvotes = await Post.find({_id: post, upvotes: expert});
         if (expertInUpvotes.length !== 0) {
-            await Post.updateOne({ _id: post }, { $pull: { upvotes: expert } });
+            await Post.updateOne({_id: post}, {$pull: {upvotes: expert}});
         }
     } catch (error) {
         console.error("Error removePostUpvote: ", error);
@@ -118,11 +127,11 @@ const removePostUpvote = async (post, expert) => {
 
 const downvotePost = async (post, expert) => {
     try {
-        const expertInUpvotes = await Post.find({ _id: post, upvotes: expert });
+        const expertInUpvotes = await Post.find({_id: post, upvotes: expert});
         if (expertInUpvotes.length !== 0) {
-            await Post.updateOne({ _id: post }, { $pull: { upvotes: expert } });
+            await Post.updateOne({_id: post}, {$pull: {upvotes: expert}});
         }
-        await Post.updateOne({ _id: post }, { $push: { downvotes: expert } });
+        await Post.updateOne({_id: post}, {$push: {downvotes: expert}});
     } catch (error) {
         console.error("Error downvotePost: ", error);
     }
@@ -136,14 +145,24 @@ const removePostDownvote = async (post, expert) => {
         });
         if (expertInDownvotes.length !== 0) {
             await Post.updateOne(
-                { _id: post },
-                { $pull: { downvotes: expert } }
+                {_id: post},
+                {$pull: {downvotes: expert}}
             );
         }
     } catch (error) {
         console.error("Error removePostDownvote: ", error);
     }
 };
+
+const deletePostById = async (postId) => {
+    try{
+        const response = await Post.deleteOne({_id : postId});
+        console.log(response);
+    }catch(error){
+        console.log(error);
+    }
+}
+
 
 const PostModel = {
     createPost,
@@ -157,6 +176,8 @@ const PostModel = {
     removePostUpvote,
     downvotePost,
     removePostDownvote,
+    getPostsByAuthor,
+    deletePostById
 };
 
 export default PostModel;

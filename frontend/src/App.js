@@ -17,6 +17,7 @@ import ModalMessage from "./components/ModalMessage";
 import MessageModalContext from "./services/message-modal-context";
 import LiveStream from "./pages/LiveStream";
 import unverifiedExpertReducer from "./reducers/unverified-experts-reducer";
+import ProfilePage from "./pages/Profile";
 
 const store = configureStore({
     reducer: {
@@ -61,6 +62,7 @@ function App() {
                                 path="/admin-verify-feed"
                                 element={<AdminVerifyFeed />}
                             />
+                            <Route path="/profile" element={<ProfilePage />} />
                         </Routes>
                     </BrowserRouter>
                 </div>

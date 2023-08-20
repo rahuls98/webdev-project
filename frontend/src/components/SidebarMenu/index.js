@@ -5,6 +5,7 @@ import DynamicFeedIcon from "@mui/icons-material/DynamicFeed";
 import VideoCameraFrontOutlinedIcon from "@mui/icons-material/VideoCameraFrontOutlined";
 import ChecklistRtlOutlinedIcon from "@mui/icons-material/ChecklistRtlOutlined";
 import BookmarkAddedOutlinedIcon from "@mui/icons-material/BookmarkAddedOutlined";
+import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import SidebarMenuItem from "../SidebarMenuItem";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import { useSelector, useDispatch } from "react-redux";
@@ -109,6 +110,15 @@ const SidebarMenu = () => {
                         ) : (
                             <div></div>
                         )}
+
+                        <Link to="/profile" style={{ textDecoration: "none" }}>
+                            <SidebarMenuItem
+                                itemIcon={<PersonOutlineIcon />}
+                                itemTitle="Profile"
+                                selected={page === 6}
+                                onClick={() => handlePageChange(6)}
+                            />
+                        </Link>
                     </div>
                 )}
             </List>

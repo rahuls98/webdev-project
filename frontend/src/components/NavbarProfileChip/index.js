@@ -1,4 +1,4 @@
-import {useState} from "react";
+import { useState } from "react";
 import "./style.css";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import Avatar from "@mui/joy/Avatar";
@@ -9,12 +9,12 @@ import MenuItem from "@mui/material/MenuItem";
 import ListItemText from "@mui/material/ListItemText";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
-import {useDispatch, useSelector} from "react-redux";
-import {useNavigate} from "react-router";
-import {logoutThunk} from "../../services/auth-thunks";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router";
+import { logoutThunk } from "../../services/auth-thunks";
 
 const NavbarProfileChip = (props) => {
-    const {currentUser} = useSelector((state) => state.user);
+    const { currentUser } = useSelector((state) => state.user);
     const [anchorEl, setAnchorEl] = useState(null);
     const actionsMenuOpen = Boolean(anchorEl);
     const navigate = useNavigate();
@@ -37,17 +37,18 @@ const NavbarProfileChip = (props) => {
         navigate("/login");
     };
 
-
     return (
         <div className="NavbarProfileChip_container">
-            {(currentUser === undefined || currentUser === null) ? <div></div>:
+            {currentUser === undefined || currentUser === null ? (
+                <div></div>
+            ) : (
                 <div>
                     <Chip
                         variant="outlined"
                         color="neutral"
                         size="lg"
-                        startDecorator={<Avatar size="sm"/>}
-                        endDecorator={<ArrowDropDownIcon fontSize="md"/>}
+                        startDecorator={<Avatar size="sm" />}
+                        endDecorator={<ArrowDropDownIcon fontSize="md" />}
                         onClick={handleChipClick}
                     >
                         {currentUser.fullname}
@@ -63,13 +64,14 @@ const NavbarProfileChip = (props) => {
                         <MenuList>
                             <MenuItem onClick={() => handleLogoutClick()}>
                                 <ListItemIcon>
-                                    <LogoutOutlinedIcon fontSize="small"/>
+                                    <LogoutOutlinedIcon fontSize="small" />
                                 </ListItemIcon>
                                 <ListItemText>Logout</ListItemText>
                             </MenuItem>
                         </MenuList>
                     </Menu>
-                </div>}
+                </div>
+            )}
         </div>
     );
 };

@@ -30,7 +30,7 @@ const findExpertByCredentials = (email, password) =>
 
 const readExperts = async () => {
     try {
-        return await Expert.find();
+        return await Expert.find({isVerified: true});
     } catch (error) {
         console.error("Error readExperts: ", error);
     }

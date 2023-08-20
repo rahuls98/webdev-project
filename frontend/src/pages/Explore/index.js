@@ -25,15 +25,16 @@ const Explore = (props) => {
     const [topics, setTopics] = useState([]);
     const [posts, setPosts] = useState([]);
     const [sessions, setSessions] = useState([]);
+    const [searchString, setSearchString] = useState("");
 
     const handleTabChange = (event, newValue) => {
         setTab(newValue);
     };
 
     useEffect(() => {
-        if (props.searchString && props.searchString !== "") {
+        if (searchString !== "") {
             const search = async () => {
-                const searchResult = await feedApis.search(props.searchString);
+                const searchResult = await feedApis.search(searchString);
                 setExperts(searchResult.experts || []);
                 setTopics(searchResult.topics || []);
                 setPosts(searchResult.posts || []);
@@ -43,7 +44,11 @@ const Explore = (props) => {
         } else {
             const getAllExperts = async () => {
                 const experts = await expertApis.getAllExperts();
-                setExperts(experts);
+
+                let filteredExperts = experts.filter(
+                    (expert) => expert._id != currentUser._id
+                );
+                setExperts(filteredExperts);
             };
             const getAllTopics = async () => {
                 const topics = await topicApis.getExplorableTopics(
@@ -53,24 +58,36 @@ const Explore = (props) => {
             };
             const getAllPosts = async () => {
                 const posts = await postApis.getAllPosts(currentUser?._id);
-                setPosts(posts);
+                let filteredPosts = posts.filter(
+                    (post) => post.author._id != currentUser._id
+                );
+                setPosts(filteredPosts);
             };
             const getAllSessions = async () => {
                 const sessions = await sessionApis.getAllSessions(
                     currentUser._id
                 );
-                setSessions(sessions);
+                let filteredSessions = sessions.filter(
+                    (session) => session.author._id != currentUser._id
+                );
+                setSessions(filteredSessions);
             };
             getAllExperts();
             getAllTopics();
             getAllPosts();
             getAllSessions();
         }
-    }, []);
+    }, [searchString]);
+
+    const handleExpertsActionClick = () => {};
 
     return (
         <div className="Explore_container">
-            <MainLayout page={currentUser ? 4 : -1}>
+            <MainLayout
+                page={currentUser ? 4 : -1}
+                searchString={searchString}
+                setSearchString={setSearchString}
+            >
                 {currentUser === undefined || currentUser === null ? (
                     <UnauthorizedMessage />
                 ) : (
@@ -83,10 +100,16 @@ const Explore = (props) => {
                                 <Tab label="Sessions" value="4" />
                             </TabList>
                             <TabPanel value="1">
-                                <TableTopics data={topics} />
+                                <TableTopics
+                                    data={topics}
+                                    onActionClick={handleExpertsActionClick}
+                                />
                             </TabPanel>
                             <TabPanel value="2">
-                                <TableExperts data={experts} />
+                                <TableExperts
+                                    data={experts}
+                                    onActionClick={handleExpertsActionClick}
+                                />
                             </TabPanel>
                             <TabPanel value="3">
                                 {posts.length === 0 ? (

@@ -39,6 +39,7 @@ const TableItemExpert = (props) => {
             setItemAction("Unfollow");
         }
         setSnackbar(true);
+        props.onActionClick();
     };
 
     const handleSnackbarClose = (event, reason) => {

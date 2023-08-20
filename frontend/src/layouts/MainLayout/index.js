@@ -9,14 +9,13 @@ import { setPage } from "../../reducers/navigation-reducer";
 import { useNavigate } from "react-router";
 
 const MainLayout = (props) => {
-    const [searchString, setSearchString] = useState("");
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
     const handleOnTagClick = (topic) => {
-        setSearchString(topic);
-        dispatch(setPage(4));
-        navigate("/explore");
+        // props.setSearchString(topic);
+        // dispatch(setPage(4));
+        // navigate("/explore");
     };
 
     return (
@@ -28,8 +27,9 @@ const MainLayout = (props) => {
                     </Grid>
                     <Grid item lg={10}>
                         <Navbar
-                            searchString={searchString}
-                            onSearchClose={() => setSearchString("")}
+                            searchString={props.searchString}
+                            setSearchString={props.setSearchString}
+                            onSearchClose={() => props.setSearchString("")}
                         />
                         {props.children}
                     </Grid>

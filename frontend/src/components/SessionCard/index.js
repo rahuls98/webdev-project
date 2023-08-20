@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, Fragment } from "react";
 import "./style.css";
 import Stack from "@mui/material/Stack";
 import TopicChip from "../TopicChip";
@@ -17,6 +17,7 @@ import { useSelector } from "react-redux";
 import vaultApis from "../../apis/vault";
 import MessageModalContext from "../../services/message-modal-context";
 import { useNavigate } from "react-router";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const SessionCard = (props) => {
     const { currentUser } = useSelector((state) => state.user);
@@ -52,6 +53,10 @@ const SessionCard = (props) => {
 
     const handleSessionDoneClick = async () => {
         await sessionApis.markSessionComplete({ session: props.session._id });
+    };
+
+    const handleSessionDeleteClick = async () => {
+        await sessionApis.deleteSession(props.session._id);
     };
 
     const handleJoinClick = async () => {
@@ -151,12 +156,24 @@ const SessionCard = (props) => {
                 >
                     <MenuList>
                         {props.session?.author === currentUser._id ? (
-                            <MenuItem onClick={() => handleSessionDoneClick()}>
-                                <ListItemIcon>
-                                    <DoneIcon fontSize="small" />
-                                </ListItemIcon>
-                                <ListItemText>Done</ListItemText>
-                            </MenuItem>
+                            <Fragment>
+                                <MenuItem
+                                    onClick={() => handleSessionDoneClick()}
+                                >
+                                    <ListItemIcon>
+                                        <DoneIcon fontSize="small" />
+                                    </ListItemIcon>
+                                    <ListItemText>Done</ListItemText>
+                                </MenuItem>
+                                <MenuItem
+                                    onClick={() => handleSessionDeleteClick()}
+                                >
+                                    <ListItemIcon>
+                                        <DeleteIcon fontSize="small" />
+                                    </ListItemIcon>
+                                    <ListItemText>Delete</ListItemText>
+                                </MenuItem>
+                            </Fragment>
                         ) : null}
                         {currentUser.role === "User" ||
                         props.session?.author !== currentUser._id ? (

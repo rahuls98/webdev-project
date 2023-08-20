@@ -11,22 +11,22 @@ const createExpert = async (body) => {
             email: body.email,
             expertiseTopics: body.expertiseTopics,
             password: body.password,
-            isVerified: false
+            isVerified: false,
         });
-        console.log(newlyCreatedExpert)
-        await UserFollowingExpertModel.createUserFollowingExpert(newlyCreatedExpert._doc._id, newlyCreatedExpert._doc._id);
+        await UserFollowingExpertModel.createUserFollowingExpert(
+            newlyCreatedExpert._doc._id,
+            newlyCreatedExpert._doc._id
+        );
         return newlyCreatedExpert;
     } catch (error) {
         console.error("Error createExpert: ", error);
     }
 };
 
-const findExpertByUsername = (email) =>
-    Expert.findOne({email});
-
+const findExpertByUsername = (email) => Expert.findOne({ email });
 
 const findExpertByCredentials = (email, password) =>
-    Expert.findOne({email, password});
+    Expert.findOne({ email, password });
 
 const readExperts = async () => {
     try {
@@ -41,19 +41,18 @@ const readExpertsById = async (expertIds) => {
         const objectIdExpertIds = expertIds.map(
             (id) => new mongoose.Types.ObjectId(id)
         );
-        const experts = await Expert.find({_id: {$in: objectIdExpertIds}});
+        const experts = await Expert.find({ _id: { $in: objectIdExpertIds } });
         return experts;
     } catch (error) {
         console.error("Error readExpertsById: ", error);
     }
 };
 
-
 const searchExpertsByTopic = async (searchCriteria) => {
     try {
         const regex = new RegExp(searchCriteria, "i");
         const experts = await Expert.find({
-            expertiseTopics: {$regex: regex},
+            expertiseTopics: { $regex: regex },
         });
         return experts;
     } catch (error) {
@@ -64,8 +63,8 @@ const searchExpertsByTopic = async (searchCriteria) => {
 const increaseFollowerCount = async (expertId) => {
     try {
         await Expert.updateOne(
-            {_id: expertId},
-            {$inc: {followerCount: 1}}
+            { _id: expertId },
+            { $inc: { followerCount: 1 } }
         );
     } catch (error) {
         console.error("Error increaseFollowerCount: ", error);
@@ -75,36 +74,34 @@ const increaseFollowerCount = async (expertId) => {
 const decreaseFollowerCount = async (expertId) => {
     try {
         await Expert.updateOne(
-            {_id: expertId},
-            {$inc: {followerCount: -1}}
+            { _id: expertId },
+            { $inc: { followerCount: -1 } }
         );
     } catch (error) {
         console.error("Error increaseFollowerCount: ", error);
     }
 };
 
-
 const findAllUnverifiedExperts = async () => {
     try {
-        const unverifiedExperts = await Expert.find(
-            {isVerified: false}
-        );
+        const unverifiedExperts = await Expert.find({ isVerified: false });
         return unverifiedExperts;
     } catch (error) {
         console.error("Error with DB : ", error);
     }
-}
+};
 
 export const verifyExpert = async (id) => {
     try {
-        const updatedExpert = Expert.updateOne({_id: id}, {$set: {isVerified: true}});
-        console.log("updatedExpert : ", updatedExpert)
+        const updatedExpert = Expert.updateOne(
+            { _id: id },
+            { $set: { isVerified: true } }
+        );
         return updatedExpert;
     } catch (error) {
         console.log(error);
     }
-
-}
+};
 
 const ExpertModel = {
     createExpert,
@@ -116,7 +113,7 @@ const ExpertModel = {
     findExpertByUsername,
     findExpertByCredentials,
     findAllUnverifiedExperts,
-    verifyExpert
+    verifyExpert,
 };
 
 export default ExpertModel;

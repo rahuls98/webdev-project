@@ -17,7 +17,10 @@ const followTopic = async (data) => {
 };
 
 const unfollowTopic = async (data) => {
-    return await requestMethods.del("/topic/unfollow/", data);
+    return await requestMethods.del(
+        `/topic/unfollow/${data.topic}/${data.user}`,
+        data
+    );
 };
 
 const topicApis = {

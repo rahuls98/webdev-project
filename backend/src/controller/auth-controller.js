@@ -2,7 +2,6 @@ import * as usersDao from "../Dao/user-dao.js";
 import Expert from "../models/Expert.js";
 
 export const register = async (req, res) => {
-    console.log(req.body);
     try {
         if (req.body.role === "Expert") {
             const expert = await Expert.findExpertByUsername(req.body.email);
@@ -31,7 +30,6 @@ export const register = async (req, res) => {
             res.json(newUser);
         }
     } catch (error) {
-        console.log(error);
         res.status(500).json({
             status: 500,
             message: "Found Duplicate Key retry with a different user ID",
@@ -67,7 +65,6 @@ export const login = async (req, res) => {
                 }
             }
         } catch (error) {
-            console.log(error);
             res.status(500).json({
                 status: 500,
                 message: "Error fetching entry from Database",
@@ -90,7 +87,6 @@ export const logout = async (req, res) => {
 };
 
 export const update = (req, res) => {
-    console.log(req.body);
     const currentUser = req.session["currentUser"];
     if (currentUser === undefined) {
         res.sendStatus(401);

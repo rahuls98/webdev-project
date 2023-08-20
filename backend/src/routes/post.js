@@ -7,6 +7,12 @@ import {
 
 const router = express.Router();
 
+
+router.get("/getUnauthenticatedPosts", async (req, res) => {
+    const posts = (await PostModel.getAllPosts()) || [];
+    res.status(200).send(posts);
+})
+
 router.get("/", isAuthenticated, async (req, res) => {
     const user = req.query.user?.toString() || "";
     const posts = (await PostModel.readPosts(user)) || [];

@@ -20,18 +20,20 @@ function ChatNdParticipants() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const redactResult = await sessionApis.redactMessage({
-            content: message,
-        });
-        if (redactResult.count === 0) {
-            hmsActions.sendBroadcastMessage(message);
-            setMessage("");
-        } else {
-            messageModalHandleOpen(true);
-            setMessageModalContent(
-                "Content cannot contain any personal information/vulgarity!"
-            );
-        }
+        hmsActions.sendBroadcastMessage(message);
+        setMessage("");
+        // const redactResult = await sessionApis.redactMessage({
+        //     content: message,
+        // });
+        // if (redactResult.count === 0) {
+        //     hmsActions.sendBroadcastMessage(message);
+        //     setMessage("");
+        // } else {
+        //     messageModalHandleOpen(true);
+        //     setMessageModalContent(
+        //         "Content cannot contain any personal information/vulgarity!"
+        //     );
+        // }
     };
 
     return (

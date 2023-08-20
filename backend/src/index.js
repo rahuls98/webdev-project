@@ -43,11 +43,8 @@ const sessionOptions = {
 if (process.env.NODE_ENV !== "development") {
     sessionOptions.proxy = true;
     sessionOptions.cookie = {
-        name: "session",
-        expires: 10000,
-        httpOnly: true,
-        secure: true,
         sameSite: "none",
+        secure: true,
     };
 }
 server.use(session(sessionOptions));

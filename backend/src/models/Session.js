@@ -21,6 +21,7 @@ const createSession = async (
             topics,
         });
         await session.save();
+        await addEnrollment(session._id , author);
     } catch (error) {
         console.error("Error createSession: ", error);
     }

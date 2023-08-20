@@ -6,13 +6,14 @@ const Expert = mongoose.model("Expert", ExpertSchema);
 
 const createExpert = async (body) => {
     try {
-        const newlyCreatedExpert = Expert.create({
+        const newlyCreatedExpert = await Expert.create({
             fullname: body.fullname,
             email: body.email,
             expertiseTopics: body.expertiseTopics,
             password: body.password,
             isVerified: false
         });
+        console.log(newlyCreatedExpert)
         await UserFollowingExpertModel.createUserFollowingExpert(newlyCreatedExpert._doc._id, newlyCreatedExpert._doc._id);
         return newlyCreatedExpert;
     } catch (error) {

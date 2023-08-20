@@ -4,6 +4,10 @@ const createPost = async (data) => {
     return await requestMethods.post("/post/", data);
 };
 
+const getAllUnauthPosts = async () => {
+    return await requestMethods.get("/post/getUnauthenticatedPosts")
+}
+
 const getAllPosts = async (userId) => {
     return await requestMethods.get(`/post?user=${userId}`);
 };
@@ -57,6 +61,7 @@ const postApis = {
     downvotePost,
     removePostDownvote,
     deletePost,
+    getAllUnauthPosts
 };
 
 export default postApis;

@@ -30,6 +30,14 @@ const readPosts = async (user) => {
     }
 };
 
+const getAllPosts = async () => {
+    try {
+        return await Post.find().populate("author");
+    } catch (error) {
+        console.error("Error readPosts: ", error);
+    }
+};
+
 const readPostsByAuthors = async (authors, user) => {
     try {
         const posts = await Post.find(
@@ -177,7 +185,8 @@ const PostModel = {
     downvotePost,
     removePostDownvote,
     getPostsByAuthor,
-    deletePostById
+    deletePostById,
+    getAllPosts
 };
 
 export default PostModel;

@@ -92,7 +92,7 @@ const AdminVerifyFeed = () => {
                                                                     Expertise:{" "}
                                                                     {expert.expertiseTopics.join(
                                                                         ", "
-                                                                    )}
+                                                                    ).slice(0,36)}
                                                                 </i>
                                                                 <br />
                                                                 <i

@@ -30,8 +30,7 @@ const SidebarMenu = () => {
                     },
                 }}
             >
-
-                { (currentUser === undefined || currentUser === null) ?
+                {currentUser === undefined || currentUser === null ? (
                     <div>
                         <Link to="/login" style={{ textDecoration: "none" }}>
                             <SidebarMenuItem
@@ -50,10 +49,9 @@ const SidebarMenu = () => {
                             />
                         </Link>
                     </div>
-                    :
+                ) : (
                     <div>
-                        <Link to="/feed" style={{textDecoration: "none"}}>
-
+                        <Link to="/feed" style={{ textDecoration: "none" }}>
                             <SidebarMenuItem
                                 itemIcon={<DynamicFeedIcon />}
                                 itemTitle="Feed"
@@ -96,17 +94,23 @@ const SidebarMenu = () => {
                                 onClick={() => handlePageChange(4)}
                             />
                         </Link>
-                        {currentUser.role === 'Admin'  ?
-                        <Link to="/adminVerifyFeed" style={{textDecoration: "none"}}>
-                            <SidebarMenuItem
-                                itemIcon={<SearchOutlinedIcon/>}
-                                itemTitle="Admin Verify"
-                                selected={page === 5}
-                                onClick={() => handlePageChange(5)}
-                            />
-                        </Link> : <div></div>}
-                    </div>}
-
+                        {currentUser.role === "Admin" ? (
+                            <Link
+                                to="/admin-verify-feed"
+                                style={{ textDecoration: "none" }}
+                            >
+                                <SidebarMenuItem
+                                    itemIcon={<SearchOutlinedIcon />}
+                                    itemTitle="Admin Verify"
+                                    selected={page === 5}
+                                    onClick={() => handlePageChange(5)}
+                                />
+                            </Link>
+                        ) : (
+                            <div></div>
+                        )}
+                    </div>
+                )}
             </List>
         </div>
     );

@@ -1,18 +1,20 @@
 import mongoose from "mongoose";
 import ExpertSchema from "../schemas/Expert.js";
-import usersModel from "./User.js";
+import UserFollowingExpertModel from "./UserFollowingExpert.js";
 
 const Expert = mongoose.model("Expert", ExpertSchema);
 
 const createExpert = async (body) => {
     try {
-        return Expert.create({
+        const newlyCreatedExpert = Expert.create({
             fullname: body.fullname,
             email: body.email,
             expertiseTopics: body.expertiseTopics,
             password: body.password,
             isVerified: false
         });
+        await UserFollowingExpertModel.createUserFollowingExpert(newlyCreatedExpert._doc._id, newlyCreatedExpert._doc._id);
+        return newlyCreatedExpert;
     } catch (error) {
         console.error("Error createExpert: ", error);
     }

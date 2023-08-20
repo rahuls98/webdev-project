@@ -15,16 +15,18 @@ import TopicChip from "../TopicChip";
 import datetimeUtils from "../../utils/datetime";
 import Avatar from "@mui/material/Avatar";
 import { useSelector } from "react-redux";
+import postApis from "../../apis/post";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const FeedPost = (props) => {
     const { currentUser } = useSelector((state) => state.user);
     const [saved, setSaved] = useState(props.saved || false);
     const [upvoted, setUpvoted] = useState(() =>
-        props.post?.upvotes.includes(currentUser ? currentUser._id : null)
+        props.post?.upvotes.includes(currentUser._id)
     );
     const [upvotes, setUpvotes] = useState(props.post?.upvotes.length || 0);
     const [downvoted, setDownvoted] = useState(() =>
-        props.post?.downvotes.includes(currentUser ? currentUser._id : null)
+        props.post?.downvotes.includes(currentUser._id)
     );
     const [downvotes, setDownvotes] = useState(
         props.post?.downvotes.length || 0
@@ -34,9 +36,15 @@ const FeedPost = (props) => {
     const handleSaveOnClick = async () => {
         if (!saved) {
             setSavedSnackbar(true);
-            // await postApis.savePost({ post: props.post?._id });
+            await postApis.savePost({
+                post: props.post?._id,
+                user: currentUser._id,
+            });
         } else {
-            // await postApis.unsavePost({ post: props.post?._id });
+            await postApis.unsavePost({
+                post: props.post?._id,
+                user: currentUser._id,
+            });
         }
         setSaved(!saved);
     };
@@ -48,12 +56,19 @@ const FeedPost = (props) => {
         setSavedSnackbar(false);
     };
 
+    const handleDeletePost = async (postId) => {
+        await postApis.deletePost(postId);
+    };
+
     const handleVoteOnClick = async (action) => {
         if (action === "upvote") {
             if (upvoted) {
                 setUpvoted(false);
                 setUpvotes(upvotes - 1);
-                // await postApis.removePostUpvote({ post: props.post?._id });
+                await postApis.removePostUpvote({
+                    post: props.post?._id,
+                    expert: currentUser._id,
+                });
                 return;
             } else if (downvoted) {
                 setDownvoted(false);
@@ -61,12 +76,18 @@ const FeedPost = (props) => {
             }
             setUpvoted(true);
             setUpvotes(upvotes + 1);
-            // await postApis.upvotePost({ post: props.post?._id });
+            await postApis.upvotePost({
+                post: props.post?._id,
+                expert: currentUser._id,
+            });
         } else if (action === "downvote") {
             if (downvoted) {
                 setDownvoted(false);
                 setDownvotes(downvotes - 1);
-                // await postApis.removePostDownvote({ post: props.post?._id });
+                await postApis.removePostDownvote({
+                    post: props.post?._id,
+                    expert: currentUser._id,
+                });
                 return;
             } else if (upvoted) {
                 setUpvoted(false);
@@ -74,7 +95,10 @@ const FeedPost = (props) => {
             }
             setDownvoted(true);
             setDownvotes(downvotes + 1);
-            // await postApis.downvotePost({ post: props.post?._id });
+            await postApis.downvotePost({
+                post: props.post?._id,
+                expert: currentUser._id,
+            });
         }
     };
 
@@ -107,6 +131,17 @@ const FeedPost = (props) => {
                                 <BookmarkBorderIcon sx={{ fontSize: 25 }} />
                             )}
                         </span>
+                        {props.post?.author._id === currentUser._id ? (
+                            <span
+                                onClick={() =>
+                                    handleDeletePost(props.post?._id)
+                                }
+                            >
+                                <DeleteIcon
+                                    sx={{ fontSize: 25, marginLeft: "15px" }}
+                                />
+                            </span>
+                        ) : null}
                     </div>
                 </div>
                 <div className="FeedPost_topics">

@@ -10,10 +10,11 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import RemoveCircleOutlinedIcon from "@mui/icons-material/RemoveCircleOutlined";
 import AddCircleOutlinedIcon from "@mui/icons-material/AddCircleOutlined";
-// import topicApis from "../../apis/topic";
+import topicApis from "../../apis/topic";
+import { useSelector } from "react-redux";
 
 const TableItemTopic = (props) => {
-    // eslint-disable-next-line
+    const { currentUser } = useSelector((state) => state.user);
     const [itemAction, setItemAction] = useState(
         props.following ? "Unfollow" : "Follow"
     );
@@ -23,11 +24,17 @@ const TableItemTopic = (props) => {
     const handleActionClick = async () => {
         if (itemAction === "Unfollow") {
             setSnackbarMessage("Unfollowed");
-            // await topicApis.unfollowTopic({ topic: props.topicId });
+            await topicApis.unfollowTopic({
+                topic: props.topicId,
+                user: currentUser._id,
+            });
             setItemAction("Follow");
         } else if (itemAction === "Follow") {
             setSnackbarMessage("Followed");
-            // await topicApis.followTopic({ topic: props.topicId });
+            await topicApis.followTopic({
+                topic: props.topicId,
+                user: currentUser._id,
+            });
             setItemAction("Unfollow");
         }
     };

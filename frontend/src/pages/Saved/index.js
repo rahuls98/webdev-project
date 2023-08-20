@@ -1,27 +1,24 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./style.css";
 import MainLayout from "../../layouts/MainLayout";
 import NoData from "../../components/NoData";
 import FeedPost from "../../components/FeedPost";
 import { useSelector } from "react-redux";
 import UnauthorizedMessage from "../../components/UnauthorizedMessage";
+import postApis from "../../apis/post";
 
 const Saved = () => {
     const { currentUser } = useSelector((state) => state.user);
     // eslint-disable-next-line
-    const [savedPosts, setSavedPosts] = useState([
-        {
-            author: {
-                fullname: "Rahul Suresh",
-            },
-            createdDate: new Date(),
-            topics: ["Topic 1", "Topic 2", "Topic 3"],
-            content:
-                "<p><strong>Rich text</strong>: <i>Italics</i> and <u>Underline</u></p>",
-            upvotes: [],
-            downvotes: [],
-        },
-    ]);
+    const [savedPosts, setSavedPosts] = useState([]);
+
+    useEffect(() => {
+        const getSavedPosts = async () => {
+            const posts = await postApis.getSavedPosts(currentUser._id);
+            setSavedPosts(posts);
+        };
+        getSavedPosts();
+    }, []);
 
     return (
         <div className="Saved_container">

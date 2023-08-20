@@ -1,13 +1,12 @@
-import axios from "axios"
-
+import axios from "axios";
 
 const BASE_URL = process.env.REACT_APP_SERVER_API_URL;
-const api = axios.create({withCredentials: true})
+const api = axios.create({ withCredentials: true });
 
 const get = async (url) => {
     try {
         const response = await api.get(BASE_URL + url);
-        return response;
+        return response.data;
     } catch (err) {
         console.log(err);
     }

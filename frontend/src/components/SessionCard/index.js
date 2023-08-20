@@ -47,6 +47,7 @@ const SessionCard = (props) => {
             session: props.session._id,
             user: currentUser._id,
         });
+        props.handleUnenroll();
     };
 
     const handleSessionDoneClick = async () => {

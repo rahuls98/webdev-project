@@ -3,36 +3,43 @@ import "./style.css";
 import TrendingUpIcon from "@mui/icons-material/TrendingUp";
 import Stack from "@mui/material/Stack";
 import TopicChip from "../TopicChip";
-import {useSelector} from "react-redux";
+import { useSelector } from "react-redux";
+import feedApis from "../../apis/feed";
 
 const FeedTrending = () => {
-    const {currentUser} = useSelector((state) => state.user);
+    const { currentUser } = useSelector((state) => state.user);
     const [trendingTopics, setTrendingTopics] = useState([]);
 
     useEffect(() => {
-        setTrendingTopics([
-            { _id: 1, title: "Topic 1" },
-            { _id: 2, title: "Topic 2" },
-            { _id: 3, title: "Topic 3" },
-        ]);
+        const getTrendingTopics = async () => {
+            const trendingTopics = await feedApis.getTrendingTopics();
+            setTrendingTopics(trendingTopics.topics);
+        };
+        getTrendingTopics();
     }, []);
 
     return (
         <div>
-            {(currentUser === undefined || currentUser === null) ? <div></div> :
-                    <div className="FeedTrending_container">
-                        <div className="FeedTrending_header">
-                            <span>Trending 15</span>
-                            <TrendingUpIcon sx={{ fontSize: 16 }} />
-                        </div>
-                        <Stack direction="row" flexWrap="wrap">
-                            {trendingTopics?.map((topic) => (
-                                <TopicChip key={topic._id} label={topic.title} withMargin />
-                            ))}
-                        </Stack>
-                    </div>}
+            {currentUser === undefined || currentUser === null ? (
+                <div></div>
+            ) : (
+                <div className="FeedTrending_container">
+                    <div className="FeedTrending_header">
+                        <span>Trending 15</span>
+                        <TrendingUpIcon sx={{ fontSize: 16 }} />
+                    </div>
+                    <Stack direction="row" flexWrap="wrap">
+                        {trendingTopics?.map((topic) => (
+                            <TopicChip
+                                key={topic._id}
+                                label={topic.title}
+                                withMargin
+                            />
+                        ))}
+                    </Stack>
+                </div>
+            )}
         </div>
-
     );
 };
 

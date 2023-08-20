@@ -31,7 +31,7 @@ const Explore = (props) => {
     };
 
     useEffect(() => {
-        if (props.searchString !== "") {
+        if (props.searchString && props.searchString !== "") {
             const search = async () => {
                 const searchResult = await feedApis.search(props.searchString);
                 setExperts(searchResult.experts || []);
@@ -46,11 +46,13 @@ const Explore = (props) => {
                 setExperts(experts);
             };
             const getAllTopics = async () => {
-                const topics = await topicApis.getExplorableTopics();
+                const topics = await topicApis.getExplorableTopics(
+                    currentUser?._id
+                );
                 setTopics(topics);
             };
             const getAllPosts = async () => {
-                const posts = await postApis.getAllPosts();
+                const posts = await postApis.getAllPosts(currentUser?._id);
                 setPosts(posts);
             };
             const getAllSessions = async () => {
@@ -64,7 +66,7 @@ const Explore = (props) => {
             getAllPosts();
             getAllSessions();
         }
-    }, [props.searchString, currentUser._id]);
+    }, []);
 
     return (
         <div className="Explore_container">

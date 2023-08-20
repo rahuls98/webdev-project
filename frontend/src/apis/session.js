@@ -31,6 +31,10 @@ const redactMessage = async (data) => {
     return await requestMethods.post("/session/message/redact/", data);
 };
 
+const deleteSession = async (sessionId) => {
+    return await requestMethods.del(`/session/delete?sessionId=${sessionId}`);
+};
+
 const sessionApis = {
     getAllSessions,
     getEnrolledSessions,
@@ -39,6 +43,7 @@ const sessionApis = {
     unenrollInSession,
     redactMessage,
     markSessionComplete,
+    deleteSession,
 };
 
 export default sessionApis;

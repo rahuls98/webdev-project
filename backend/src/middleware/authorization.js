@@ -1,8 +1,6 @@
 import "express";
 
 export const isAuthenticated = async (req, res, next) => {
-    console.log(req);
-    console.log(req.session);
     if (
         req.session.currentUser === null ||
         req.session.currentUser === undefined

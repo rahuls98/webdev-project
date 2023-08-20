@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./style.css";
 import MainLayout from "../../layouts/MainLayout";
 import Grid from "@mui/material/Grid";
@@ -12,19 +12,26 @@ import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
 import { useSelector } from "react-redux";
 import UnauthenticatedFeed from "../../components/UnauthenticatedFeed";
+import feedApis from "../../apis/feed";
 
 const Feed = () => {
     const { currentUser } = useSelector((state) => state.user);
-    console.log(currentUser);
     const [tab, setTab] = useState("1");
-    // eslint-disable-next-line
     const [posts, setPosts] = useState([]);
-    // eslint-disable-next-line
     const [sessions, setSessions] = useState([]);
 
     const handleTabChange = (event, newValue) => {
         setTab(newValue);
     };
+
+    useEffect(() => {
+        const getUserFeed = async () => {
+            const feed = await feedApis.getUserFeed(currentUser?._id);
+            setPosts(feed.posts);
+            setSessions(feed.sessions);
+        };
+        getUserFeed();
+    }, []);
 
     return (
         <div>

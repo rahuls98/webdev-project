@@ -37,7 +37,7 @@ const ModalPostCreate = () => {
             content: editorValue.toString(),
             topics: topics,
         });
-        if (createResponse.msg !== "Success!") {
+        if (createResponse.data.msg !== "Success!") {
             messageModalHandleOpen(true);
             setMessageModalContent(createResponse.msg);
             return;

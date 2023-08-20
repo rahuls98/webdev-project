@@ -37,7 +37,6 @@ const ModalSessionCreate = () => {
     const handleSubmit = async () => {
         const dateString = datetimeUtils.dateToReadableString(date.$d);
         const timeString = datetimeUtils.timeToReadableString(time.$d);
-        // eslint-disable-next-line
         const sessionData = {
             title,
             description,

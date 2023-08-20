@@ -10,20 +10,7 @@ import sessionApis from "../../apis/session";
 const Sessions = () => {
     const { currentUser } = useSelector((state) => state.user);
     // eslint-disable-next-line
-    const [sessions, setSessions] = useState([
-        {
-            author: {
-                fullname: "Rahul Suresh",
-            },
-            createdDate: new Date(),
-            topics: ["Topic 1", "Topic 2", "Topic 3"],
-            title: "Session title",
-            description: "Session description",
-            sessionDate: "June 10 2023",
-            sessionTime: "10:00 AM",
-            // complete: true,
-        },
-    ]);
+    const [sessions, setSessions] = useState([]);
 
     useEffect(() => {
         const getEnrolledSessions = async () => {
@@ -34,6 +21,16 @@ const Sessions = () => {
         };
         getEnrolledSessions();
     }, []);
+
+    const handleUnenroll = () => {
+        const getEnrolledSessions = async () => {
+            const enrolledSessions = await sessionApis.getEnrolledSessions(
+                currentUser._id
+            );
+            setSessions(enrolledSessions);
+        };
+        getEnrolledSessions();
+    };
 
     return (
         <div className="Sessions_container">
@@ -46,7 +43,11 @@ const Sessions = () => {
                             <NoData />
                         ) : (
                             sessions.map((session, ind) => (
-                                <SessionCard key={ind} session={session} />
+                                <SessionCard
+                                    key={ind}
+                                    session={session}
+                                    handleUnenroll={() => handleUnenroll()}
+                                />
                             ))
                         )}
                     </div>

@@ -15,32 +15,8 @@ import followingApis from "../../apis/following";
 const Following = () => {
     const { currentUser } = useSelector((state) => state.user);
     const [tab, setTab] = useState("1");
-    // eslint-disable-next-line
-    const [experts, setExperts] = useState([
-        {
-            _id: 1,
-            fullname: "Expert 1",
-            followerCount: 10,
-            expertiseTopics: ["Topic 1", "Topic 2", "Topic 3"],
-        },
-        {
-            _id: 2,
-            fullname: "Expert 2",
-            followerCount: 20,
-            expertiseTopics: ["Topic 4", "Topic 5", "Topic 6"],
-        },
-    ]);
-    // eslint-disable-next-line
-    const [topics, setTopics] = useState([
-        {
-            _id: 1,
-            title: "Topic 1",
-        },
-        {
-            _id: 2,
-            title: "Topic 2",
-        },
-    ]);
+    const [experts, setExperts] = useState([]);
+    const [topics, setTopics] = useState([]);
 
     const handleTabChange = (event, newValue) => {
         setTab(newValue);

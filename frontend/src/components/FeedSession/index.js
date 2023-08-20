@@ -11,21 +11,27 @@ import EventIcon from "@mui/icons-material/Event";
 import TopicChip from "../TopicChip";
 import datetimeUtils from "../../utils/datetime";
 import Avatar from "@mui/material/Avatar";
-import {useSelector} from "react-redux";
+import { useSelector } from "react-redux";
 import sessionApis from "../../apis/session";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const FeedSession = (props) => {
-    // eslint-disable-next-line
     const [enrolled, setEnrolled] = useState(props.enrolled);
     const [enrolledSnackbar, setEnrolledSnackbar] = useState(false);
-    const {currentUser} = useSelector((state) => state.user);
+    const { currentUser } = useSelector((state) => state.user);
 
     const handleEnrollOnClick = async () => {
         if (!enrolled) {
             setEnrolledSnackbar(true);
-             await sessionApis.enrollInSession({ session: props.session._id  , user: currentUser._id});
+            await sessionApis.enrollInSession({
+                session: props.session._id,
+                user: currentUser._id,
+            });
         } else {
-             await sessionApis.unenrollInSession({ session: props.session._id , user: currentUser._id});
+            await sessionApis.unenrollInSession({
+                session: props.session._id,
+                user: currentUser._id,
+            });
         }
         setEnrolled(!enrolled);
     };
@@ -35,6 +41,10 @@ const FeedSession = (props) => {
             return;
         }
         setEnrolledSnackbar(false);
+    };
+
+    const handleDeleteSession = async (sessionId) => {
+        await sessionApis.deleteSession(sessionId);
     };
 
     return (
@@ -66,6 +76,17 @@ const FeedSession = (props) => {
                                 <BackHandOutlinedIcon sx={{ fontSize: 25 }} />
                             )}
                         </span>
+                        {props.session?.author._id === currentUser._id ? (
+                            <span
+                                onClick={() =>
+                                    handleDeleteSession(props.session?._id)
+                                }
+                            >
+                                <DeleteIcon
+                                    sx={{ fontSize: 25, marginLeft: "15px" }}
+                                />
+                            </span>
+                        ) : null}
                     </div>
                 </div>
                 <div className="FeedSession_topics">

@@ -36,6 +36,10 @@ const removePostDownvote = async (data) => {
     return await requestMethods.del("/post/downvote", data);
 };
 
+const deletePost = async (postId) => {
+    return await requestMethods.del(`/post/delete?postId=${postId}`);
+};
+
 const postApis = {
     createPost,
     getAllPosts,
@@ -46,6 +50,7 @@ const postApis = {
     removePostUpvote,
     downvotePost,
     removePostDownvote,
+    deletePost,
 };
 
 export default postApis;

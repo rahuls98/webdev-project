@@ -1,6 +1,5 @@
 import requestMethods from "../apis/base";
-const SERVER_API_URL = process.env.REACT_APP_SERVER_API_URL;
-const USERS_URL = `${SERVER_API_URL}/authentication`;
+const USERS_URL = "/authentication";
 
 export const login = async ({ email, password }) => {
     const response = await requestMethods.post(`${USERS_URL}/signin`, {
@@ -9,12 +8,6 @@ export const login = async ({ email, password }) => {
     });
     const user = response.data;
     console.log(user);
-    // const user = {
-    //     _id: 1,
-    //     role: "Expert",
-    //     fullname: "Rahul Suresh",
-    //     isVerified: true,
-    // };
     return user;
 };
 

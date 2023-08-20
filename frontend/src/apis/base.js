@@ -1,63 +1,40 @@
+import axios from "axios"
+
+
 const BASE_URL = process.env.REACT_APP_SERVER_API_URL;
+const api = axios.create({withCredentials: true})
 
 const get = async (url) => {
-    const options = {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json",
-        },
-    };
     try {
-        const response = await fetch(BASE_URL + url, options);
-        return response.json();
+        const response = await api.get(BASE_URL + url);
+        return response;
     } catch (err) {
         console.log(err);
     }
 };
 
-const post = async (url, data, withToken = true) => {
-    const options = {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-    };
+const post = async (url, data) => {
     try {
-        const response = await fetch(BASE_URL + url, options);
-        return response.json();
+        const response = await api.post(BASE_URL + url, data);
+        return response;
     } catch (err) {
         console.log(err);
     }
 };
 
 const del = async (url, data) => {
-    const options = {
-        method: "DELETE",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-    };
     try {
-        const response = await fetch(BASE_URL + url, options);
-        return response.json();
+        const response = await api.delete(BASE_URL + url, data);
+        return response;
     } catch (err) {
         console.log(err);
     }
 };
 
 const put = async (url, data) => {
-    const options = {
-        method: "PUT",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-    };
     try {
-        const response = await fetch(BASE_URL + url, options);
-        return response.json();
+        const response = await api.put(BASE_URL + url, data);
+        return response;
     } catch (err) {
         console.log(err);
     }

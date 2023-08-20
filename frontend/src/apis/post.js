@@ -25,7 +25,10 @@ const upvotePost = async (data) => {
 };
 
 const removePostUpvote = async (data) => {
-    return await requestMethods.del("/post/upvote", data);
+    return await requestMethods.del(
+        `/post/upvote/${data.post}/${data.expert}`,
+        data
+    );
 };
 
 const downvotePost = async (data) => {
@@ -33,7 +36,10 @@ const downvotePost = async (data) => {
 };
 
 const removePostDownvote = async (data) => {
-    return await requestMethods.del(`/post/downvote/${data.post}`, data);
+    return await requestMethods.del(
+        `/post/downvote/${data.post}/${data.expert}`,
+        data
+    );
 };
 
 const deletePost = async (postId) => {

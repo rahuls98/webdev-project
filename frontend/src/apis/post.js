@@ -33,7 +33,7 @@ const downvotePost = async (data) => {
 };
 
 const removePostDownvote = async (data) => {
-    return await requestMethods.del("/post/downvote", data);
+    return await requestMethods.del(`/post/downvote/${data.post}`, data);
 };
 
 const deletePost = async (postId) => {

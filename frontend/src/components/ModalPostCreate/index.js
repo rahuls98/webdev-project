@@ -12,7 +12,7 @@ import postApis from "../../apis/post";
 import MessageModalContext from "../../services/message-modal-context";
 import { useSelector } from "react-redux";
 
-const ModalPostCreate = () => {
+const ModalPostCreate = (props) => {
     const { currentUser } = useSelector((state) => state.user);
     const { setMessageModalContent, messageModalHandleOpen } =
         useContext(MessageModalContext);
@@ -43,6 +43,7 @@ const ModalPostCreate = () => {
             return;
         } else {
             setModalOpen(false);
+            props.handleRefresh();
         }
     };
 

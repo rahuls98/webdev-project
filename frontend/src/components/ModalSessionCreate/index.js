@@ -15,7 +15,7 @@ import datetimeUtils from "../../utils/datetime";
 import sessionApis from "../../apis/session";
 import { useSelector } from "react-redux";
 
-const ModalSessionCreate = () => {
+const ModalSessionCreate = (props) => {
     const { currentUser } = useSelector((state) => state.user);
     const [modalOpen, setModalOpen] = useState(false);
     const [title, setTitle] = useState("");
@@ -47,6 +47,7 @@ const ModalSessionCreate = () => {
         };
         await sessionApis.createSession(sessionData);
         setModalOpen(false);
+        props.handleRefresh();
     };
 
     return (

@@ -28,8 +28,8 @@ const Feed = () => {
         if (currentUser) {
             const getUserFeed = async () => {
                 const feed = await feedApis.getUserFeed(currentUser?._id);
-                setPosts(feed.posts);
-                setSessions(feed.sessions);
+                setPosts(feed.posts.reverse());
+                setSessions(feed.sessions.reverse());
             };
             if (currentUser) getUserFeed();
         }
@@ -52,7 +52,7 @@ const Feed = () => {
                 </MainLayout>
             ) : (
                 <div className="Feed_container">
-                    <MainLayout page={0}>
+                    <MainLayout page={0} handleRefresh={handleRefresh}>
                         <div className="FeedLayoutContent_container">
                             <div className="FeedLayoutContent_content">
                                 <Grid container spacing={0}>

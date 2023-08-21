@@ -17,25 +17,38 @@ const Sessions = () => {
                 const enrolledSessions = await sessionApis.getEnrolledSessions(
                     currentUser._id
                 );
-                setSessions(enrolledSessions);
+                setSessions(enrolledSessions.reverse());
             };
             getEnrolledSessions();
         }
     }, []);
+
+    const handleRefresh = () => {
+        const getEnrolledSessions = async () => {
+            const enrolledSessions = await sessionApis.getEnrolledSessions(
+                currentUser._id
+            );
+            setSessions(enrolledSessions.reverse());
+        };
+        getEnrolledSessions();
+    };
 
     const handleUnenroll = () => {
         const getEnrolledSessions = async () => {
             const enrolledSessions = await sessionApis.getEnrolledSessions(
                 currentUser._id
             );
-            setSessions(enrolledSessions);
+            setSessions(enrolledSessions.reverse());
         };
         getEnrolledSessions();
     };
 
     return (
         <div className="Sessions_container">
-            <MainLayout page={currentUser ? 1 : -1}>
+            <MainLayout
+                page={currentUser ? 1 : -1}
+                handleRefresh={handleRefresh}
+            >
                 {currentUser === undefined || currentUser === null ? (
                     <UnauthorizedMessage />
                 ) : (

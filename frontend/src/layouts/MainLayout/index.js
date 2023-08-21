@@ -1,4 +1,3 @@
-import { useState } from "react";
 import "./style.css";
 import Sidebar from "../../components/Sidebar";
 import Grid from "@mui/material/Grid";
@@ -9,8 +8,8 @@ import { setPage } from "../../reducers/navigation-reducer";
 import { useNavigate } from "react-router";
 
 const MainLayout = (props) => {
-    const navigate = useNavigate();
-    const dispatch = useDispatch();
+    // const navigate = useNavigate();
+    // const dispatch = useDispatch();
 
     const handleOnTagClick = (topic) => {
         // props.setSearchString(topic);
@@ -27,6 +26,7 @@ const MainLayout = (props) => {
                     </Grid>
                     <Grid item lg={10}>
                         <Navbar
+                            handleRefresh={props.handleRefresh}
                             searchString={props.searchString}
                             setSearchString={props.setSearchString}
                             onSearchClose={() => props.setSearchString("")}

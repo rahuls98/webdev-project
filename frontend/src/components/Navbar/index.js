@@ -26,10 +26,10 @@ const Navbar = (props) => {
             </div>
             <div className="Navbar_right">
                 {currentUser && currentUser.role === "Expert" && page === 0 ? (
-                    <ModalPostCreate />
+                    <ModalPostCreate handleRefresh={props.handleRefresh} />
                 ) : null}
                 {currentUser && currentUser.role === "Expert" && page === 1 ? (
-                    <ModalSessionCreate />
+                    <ModalSessionCreate handleRefresh={props.handleRefresh} />
                 ) : null}
                 <NavbarProfileChip />
             </div>

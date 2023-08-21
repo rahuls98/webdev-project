@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 import UnauthorizedMessage from "../../components/UnauthorizedMessage";
 import postApis from "../../apis/post";
 
-const Saved = () => {
+const Saved = (props) => {
     const { currentUser } = useSelector((state) => state.user);
     const [savedPosts, setSavedPosts] = useState([]);
 
@@ -21,6 +21,14 @@ const Saved = () => {
         }
     }, []);
 
+    const handleRefresh = () => {
+        const getSavedPosts = async () => {
+            const posts = await postApis.getSavedPosts(currentUser._id);
+            setSavedPosts(posts);
+        };
+        if (currentUser) getSavedPosts();
+    };
+
     return (
         <div className="Saved_container">
             <MainLayout page={3}>
@@ -32,7 +40,12 @@ const Saved = () => {
                             <NoData />
                         ) : (
                             savedPosts.map((post, ind) => (
-                                <FeedPost key={ind} saved post={post} />
+                                <FeedPost
+                                    key={ind}
+                                    saved
+                                    post={post}
+                                    onDelete={handleRefresh}
+                                />
                             ))
                         )}
                     </div>

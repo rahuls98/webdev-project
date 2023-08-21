@@ -16,8 +16,11 @@ import FormLabel from "@mui/material/FormLabel";
 import { useDispatch } from "react-redux";
 import { registerThunk } from "../../services/auth-thunks";
 import MessageModalContext from "../../services/message-modal-context";
+import { setPage } from "../../reducers/navigation-reducer";
+import { useSelector } from "react-redux";
 
 const FormSignup = (props) => {
+    const { currentUser } = useSelector((state) => state.user);
     const [role, setRole] = useState("User");
     const [fullname, setFullname] = useState("");
     const [email, setEmail] = useState("");
@@ -61,7 +64,8 @@ const FormSignup = (props) => {
             setConfirmPasswordError(true);
         }
         if (password !== confirmPassword) {
-            // Show modal
+            messageModalHandleOpen(true);
+            setMessageModalContent("Passwords don't match!");
             return;
         }
         if (fullname && email && password && confirmPassword) {
@@ -69,7 +73,15 @@ const FormSignup = (props) => {
                 await dispatch(
                     registerThunk({ email, password, fullname, role })
                 );
-                navigate("/feed");
+                if (currentUser) {
+                    dispatch(setPage(-2));
+                    navigate("/profile");
+                } else {
+                    messageModalHandleOpen(true);
+                    setMessageModalContent(
+                        "Registration failed, please try a different email!"
+                    );
+                }
             } catch (e) {
                 messageModalHandleOpen(true);
                 setMessageModalContent(e.message);

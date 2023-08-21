@@ -5,13 +5,13 @@ import UnauthorizedMessage from "../../components/UnauthorizedMessage";
 import TopicSearch from "../../components/TopicSearch";
 import TopicChip from "../../components/TopicChip";
 import TextField from "@mui/material/TextField";
-import {useDispatch, useSelector} from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import VerticalSpace from "../../components/VerticalSpace";
 import VerifiedIcon from "@mui/icons-material/Verified";
 import Button from "@mui/joy/Button";
 import profileApis from "../../apis/profile";
 import MessageModalContext from "../../services/message-modal-context";
-import {updateUserThunk} from "../../services/auth-thunks";
+import { updateUserThunk } from "../../services/auth-thunks";
 
 const Profile = () => {
     const dispatch = useDispatch();
@@ -36,9 +36,9 @@ const Profile = () => {
     useEffect(() => {
         if (currentUser) {
             if (
-                fullname != currentUser.fullname ||
-                email != currentUser.email ||
-                topics != currentUser.expertiseTopics
+                fullname !== currentUser.fullname ||
+                email !== currentUser.email ||
+                topics !== currentUser.expertiseTopics
             ) {
                 setUpdateDisabled(false);
             } else {

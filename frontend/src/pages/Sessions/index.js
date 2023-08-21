@@ -61,6 +61,7 @@ const Sessions = () => {
                                     key={ind}
                                     session={session}
                                     handleUnenroll={() => handleUnenroll()}
+                                    handleRefresh={handleRefresh}
                                 />
                             ))
                         )}

@@ -30,7 +30,6 @@ const SessionCard = (props) => {
 
     const getDate = () => {
         let dateString = props.session?.sessionDate;
-        // eslint-disable-next-line
         const [month, date, year] = dateString.split(" ");
         return `${month} ${date}`;
     };
@@ -53,10 +52,13 @@ const SessionCard = (props) => {
 
     const handleSessionDoneClick = async () => {
         await sessionApis.markSessionComplete({ session: props.session._id });
+        messageModalHandleOpen(true);
+        setMessageModalContent("This session has been marked complete!");
     };
 
     const handleSessionDeleteClick = async () => {
         await sessionApis.deleteSession(props.session._id);
+        props.handleRefresh();
     };
 
     const handleJoinClick = async () => {
@@ -107,6 +109,11 @@ const SessionCard = (props) => {
                     <span className="SessionCard_time">
                         {props.session?.sessionTime || ""}
                     </span>
+                    <br />
+                    <br />
+                    {props.session?.complete ? (
+                        <strong className="SessionCard_time">(Complete)</strong>
+                    ) : null}
                 </div>
             </div>
             {/* <div className={"SessionCard_details".concat(descriptionCollapsed? " collapsed" : "")}> */}
@@ -157,14 +164,17 @@ const SessionCard = (props) => {
                     <MenuList>
                         {props.session?.author === currentUser._id ? (
                             <Fragment>
-                                <MenuItem
-                                    onClick={() => handleSessionDoneClick()}
-                                >
-                                    <ListItemIcon>
-                                        <DoneIcon fontSize="small" />
-                                    </ListItemIcon>
-                                    <ListItemText>Done</ListItemText>
-                                </MenuItem>
+                                {props.session?.complete ? null : (
+                                    <MenuItem
+                                        onClick={() => handleSessionDoneClick()}
+                                    >
+                                        <ListItemIcon>
+                                            <DoneIcon fontSize="small" />
+                                        </ListItemIcon>
+                                        <ListItemText>Done</ListItemText>
+                                    </MenuItem>
+                                )}
+
                                 <MenuItem
                                     onClick={() => handleSessionDeleteClick()}
                                 >

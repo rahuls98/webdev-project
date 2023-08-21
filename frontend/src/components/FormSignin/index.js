@@ -12,8 +12,10 @@ import { loginThunk } from "../../services/auth-thunks";
 import { useDispatch } from "react-redux";
 import { setPage } from "../../reducers/navigation-reducer";
 import MessageModalContext from "../../services/message-modal-context";
+import { useSelector } from "react-redux";
 
 const FormSignin = (props) => {
+    const { currentUser } = useSelector((state) => state.user);
     const [email, setEmail] = useState("");
     const [emailError, setEmailError] = useState(false);
     const [password, setPassword] = useState("");
@@ -42,8 +44,15 @@ const FormSignin = (props) => {
         if (email && password) {
             try {
                 await dispatch(loginThunk({ email, password }));
-                dispatch(setPage(-2));
-                navigate("/profile");
+                if (currentUser) {
+                    dispatch(setPage(-2));
+                    navigate("/profile");
+                } else {
+                    messageModalHandleOpen(true);
+                    setMessageModalContent(
+                        "Login failed, please try again! If you don't have an account, register first."
+                    );
+                }
             } catch (e) {
                 messageModalHandleOpen(true);
                 setMessageModalContent(e.message);

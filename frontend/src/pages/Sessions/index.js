@@ -9,17 +9,18 @@ import sessionApis from "../../apis/session";
 
 const Sessions = () => {
     const { currentUser } = useSelector((state) => state.user);
-    // eslint-disable-next-line
     const [sessions, setSessions] = useState([]);
 
     useEffect(() => {
-        const getEnrolledSessions = async () => {
-            const enrolledSessions = await sessionApis.getEnrolledSessions(
-                currentUser._id
-            );
-            setSessions(enrolledSessions);
-        };
-        getEnrolledSessions();
+        if (currentUser) {
+            const getEnrolledSessions = async () => {
+                const enrolledSessions = await sessionApis.getEnrolledSessions(
+                    currentUser._id
+                );
+                setSessions(enrolledSessions);
+            };
+            getEnrolledSessions();
+        }
     }, []);
 
     const handleUnenroll = () => {

@@ -16,9 +16,9 @@ import {updateUserThunk} from "../../services/auth-thunks";
 const Profile = () => {
     const dispatch = useDispatch();
     const { currentUser } = useSelector((state) => state.user);
-    const [fullname, setFullname] = useState(currentUser.fullname);
-    const [email, setEmail] = useState(currentUser.email);
-    const [topics, setTopics] = useState(currentUser.expertiseTopics);
+    const [fullname, setFullname] = useState(currentUser?.fullname);
+    const [email, setEmail] = useState(currentUser?.email);
+    const [topics, setTopics] = useState(currentUser?.expertiseTopics);
     const [updateDisabled, setUpdateDisabled] = useState(true);
     const { setMessageModalContent, messageModalHandleOpen } =
         useContext(MessageModalContext);
@@ -34,14 +34,16 @@ const Profile = () => {
     };
 
     useEffect(() => {
-        if (
-            fullname != currentUser.fullname ||
-            email != currentUser.email ||
-            topics != currentUser.expertiseTopics
-        ) {
-            setUpdateDisabled(false);
-        } else {
-            setUpdateDisabled(true);
+        if (currentUser) {
+            if (
+                fullname != currentUser.fullname ||
+                email != currentUser.email ||
+                topics != currentUser.expertiseTopics
+            ) {
+                setUpdateDisabled(false);
+            } else {
+                setUpdateDisabled(true);
+            }
         }
     }, [fullname, email, topics]);
 

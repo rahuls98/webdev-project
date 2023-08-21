@@ -1,6 +1,6 @@
 import express from "express";
 import * as authController from "../controller/auth-controller.js";
-import {isAuthenticatedAdmin} from "../middleware/authorization.js"
+import {isAuthenticated, isAuthenticatedAdmin} from "../middleware/authorization.js"
 import {verifyExpert} from "../controller/auth-controller.js";
 
 
@@ -12,7 +12,7 @@ router.post("/signin", authController.login);
 
 router.post("/logout", authController.logout);
 
-router.post("/update", authController.update);
+router.post("/profile", isAuthenticated , authController.update);
 
 router.post("/verifyExperts", isAuthenticatedAdmin, authController.verifyExpert);
 

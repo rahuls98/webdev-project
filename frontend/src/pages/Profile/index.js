@@ -47,6 +47,7 @@ const Profile = () => {
 
     const handleUpdate = async () => {
         await profileApis.updateProfile({
+            ...currentUser,
             _id: currentUser._id,
             fullname: fullname,
             email: email,

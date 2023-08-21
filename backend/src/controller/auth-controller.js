@@ -1,5 +1,6 @@
 import * as usersDao from "../Dao/user-dao.js";
 import Expert from "../models/Expert.js";
+import ExpertModel from "../models/Expert.js";
 
 export const register = async (req, res) => {
     try {
@@ -52,7 +53,7 @@ export const login = async (req, res) => {
                     password
                 );
                 if (expert) {
-                    let obj = { ...expert._doc, role: "Expert" };
+                    let obj = {...expert._doc, role: "Expert"};
                     // expert.role = "Expert";
                     req.session["currentUser"] = obj;
                     res.json(obj);
@@ -86,17 +87,20 @@ export const logout = async (req, res) => {
     });
 };
 
-export const update = (req, res) => {
+export const update = async (req, res) => {
     const currentUser = req.session["currentUser"];
-    if (currentUser === undefined) {
-        res.sendStatus(401);
-    }
-    let response = usersDao.updateUser(req.body._id, req.body);
-
-    if (response.status === "ok") {
-        res.json(response.user);
+    if (currentUser.role === "Expert") {
+        await ExpertModel.updateExpert(req.body._id, req.body);
+        res.status(200).json({
+            ...req.body
+        })
+    } else if (currentUser.role === "User") {
+        await usersDao.updateUser(req.body._id, req.body);
+        res.status(200).json({
+            ...req.body
+        })
     } else {
-        res.sendStatus(500);
+        res.status(500).json({"msg": "updates only allowed on Experts and Users"});
     }
 };
 

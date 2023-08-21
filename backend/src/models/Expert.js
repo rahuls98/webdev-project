@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import ExpertSchema from "../schemas/Expert.js";
 import UserFollowingExpertModel from "./UserFollowingExpert.js";
+import usersModel from "./User.js";
 
 const Expert = mongoose.model("Expert", ExpertSchema);
 
@@ -33,6 +34,15 @@ const readExperts = async () => {
         return await Expert.find({isVerified: true});
     } catch (error) {
         console.error("Error readExperts: ", error);
+    }
+};
+
+const updateExpert = async (id, expert) => {
+    try {
+        const updatedExpert = await Expert.updateOne({ _id: id }, { $set: expert });
+        return updatedExpert;
+    } catch (error) {
+        console.log(error);
     }
 };
 
@@ -114,6 +124,7 @@ const ExpertModel = {
     findExpertByCredentials,
     findAllUnverifiedExperts,
     verifyExpert,
+    updateExpert
 };
 
 export default ExpertModel;

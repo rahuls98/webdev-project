@@ -37,8 +37,10 @@ const Following = () => {
     };
 
     useEffect(() => {
-        getFollowingExperts();
-        getFollowingTopics();
+        if (currentUser) {
+            getFollowingExperts();
+            getFollowingTopics();
+        }
     }, [currentUser._id]);
 
     const handleExpertsActionClick = () => {

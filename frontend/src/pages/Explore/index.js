@@ -32,50 +32,52 @@ const Explore = (props) => {
     };
 
     useEffect(() => {
-        if (searchString !== "") {
-            const search = async () => {
-                const searchResult = await feedApis.search(searchString);
-                setExperts(searchResult.experts || []);
-                setTopics(searchResult.topics || []);
-                setPosts(searchResult.posts || []);
-                setSessions(searchResult.sessions || []);
-            };
-            search();
-        } else {
-            const getAllExperts = async () => {
-                const experts = await expertApis.getAllExperts();
+        if (currentUser) {
+            if (searchString !== "") {
+                const search = async () => {
+                    const searchResult = await feedApis.search(searchString);
+                    setExperts(searchResult.experts || []);
+                    setTopics(searchResult.topics || []);
+                    setPosts(searchResult.posts || []);
+                    setSessions(searchResult.sessions || []);
+                };
+                search();
+            } else {
+                const getAllExperts = async () => {
+                    const experts = await expertApis.getAllExperts();
 
-                let filteredExperts = experts.filter(
-                    (expert) => expert._id != currentUser._id
-                );
-                setExperts(filteredExperts);
-            };
-            const getAllTopics = async () => {
-                const topics = await topicApis.getExplorableTopics(
-                    currentUser?._id
-                );
-                setTopics(topics);
-            };
-            const getAllPosts = async () => {
-                const posts = await postApis.getAllPosts(currentUser?._id);
-                let filteredPosts = posts.filter(
-                    (post) => post.author._id != currentUser._id
-                );
-                setPosts(filteredPosts);
-            };
-            const getAllSessions = async () => {
-                const sessions = await sessionApis.getAllSessions(
-                    currentUser._id
-                );
-                let filteredSessions = sessions.filter(
-                    (session) => session.author._id != currentUser._id
-                );
-                setSessions(filteredSessions);
-            };
-            getAllExperts();
-            getAllTopics();
-            getAllPosts();
-            getAllSessions();
+                    let filteredExperts = experts.filter(
+                        (expert) => expert._id != currentUser._id
+                    );
+                    setExperts(filteredExperts);
+                };
+                const getAllTopics = async () => {
+                    const topics = await topicApis.getExplorableTopics(
+                        currentUser?._id
+                    );
+                    setTopics(topics);
+                };
+                const getAllPosts = async () => {
+                    const posts = await postApis.getAllPosts(currentUser?._id);
+                    let filteredPosts = posts.filter(
+                        (post) => post.author._id != currentUser._id
+                    );
+                    setPosts(filteredPosts);
+                };
+                const getAllSessions = async () => {
+                    const sessions = await sessionApis.getAllSessions(
+                        currentUser._id
+                    );
+                    let filteredSessions = sessions.filter(
+                        (session) => session.author._id != currentUser._id
+                    );
+                    setSessions(filteredSessions);
+                };
+                getAllExperts();
+                getAllTopics();
+                getAllPosts();
+                getAllSessions();
+            }
         }
     }, [searchString]);
 

@@ -25,12 +25,14 @@ const Feed = () => {
     };
 
     useEffect(() => {
-        const getUserFeed = async () => {
-            const feed = await feedApis.getUserFeed(currentUser?._id);
-            setPosts(feed.posts);
-            setSessions(feed.sessions);
-        };
-        if (currentUser) getUserFeed();
+        if (currentUser) {
+            const getUserFeed = async () => {
+                const feed = await feedApis.getUserFeed(currentUser?._id);
+                setPosts(feed.posts);
+                setSessions(feed.sessions);
+            };
+            if (currentUser) getUserFeed();
+        }
     }, []);
 
     const handleRefresh = () => {

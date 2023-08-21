@@ -9,15 +9,16 @@ import postApis from "../../apis/post";
 
 const Saved = () => {
     const { currentUser } = useSelector((state) => state.user);
-    // eslint-disable-next-line
     const [savedPosts, setSavedPosts] = useState([]);
 
     useEffect(() => {
-        const getSavedPosts = async () => {
-            const posts = await postApis.getSavedPosts(currentUser._id);
-            setSavedPosts(posts);
-        };
-        getSavedPosts();
+        if (currentUser) {
+            const getSavedPosts = async () => {
+                const posts = await postApis.getSavedPosts(currentUser._id);
+                setSavedPosts(posts);
+            };
+            getSavedPosts();
+        }
     }, []);
 
     return (

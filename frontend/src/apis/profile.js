@@ -1,8 +1,7 @@
 import requestMethods from "./base";
 
 const updateProfile = async (data) => {
-    console.log(data);
-    // return await requestMethods.post("/profile", data);
+    return await requestMethods.post("/authentication/profile", data);
 };
 
 const profileApis = {

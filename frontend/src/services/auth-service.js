@@ -15,10 +15,7 @@ export const logout = async () => {
     return response.data;
 };
 
-export const updateUser = async (user) => {
-    const response = await requestMethods.put(`${USERS_URL}`, user);
-    return response.data;
-};
+
 export const register = async (user) => {
     const response = await requestMethods.post(`${USERS_URL}/signup`, user);
     const responseUser = response.data;

@@ -11,6 +11,8 @@ import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import { useSelector, useDispatch } from "react-redux";
 import { setPage } from "../../reducers/navigation-reducer";
 import HowToRegIcon from "@mui/icons-material/HowToReg";
+import LoginIcon from "@mui/icons-material/Login";
+import AppRegistrationIcon from "@mui/icons-material/AppRegistration";
 
 const SidebarMenu = () => {
     const { currentUser } = useSelector((state) => state.user);
@@ -36,7 +38,7 @@ const SidebarMenu = () => {
                     <div>
                         <Link to="/login" style={{ textDecoration: "none" }}>
                             <SidebarMenuItem
-                                itemIcon={<DynamicFeedIcon />}
+                                itemIcon={<LoginIcon />}
                                 itemTitle="Login"
                                 selected={page === 0}
                                 onClick={() => handlePageChange(-1)}
@@ -44,7 +46,7 @@ const SidebarMenu = () => {
                         </Link>
                         <Link to="/register" style={{ textDecoration: "none" }}>
                             <SidebarMenuItem
-                                itemIcon={<DynamicFeedIcon />}
+                                itemIcon={<AppRegistrationIcon />}
                                 itemTitle="Signup"
                                 selected={page === 1}
                                 onClick={() => handlePageChange(-1)}

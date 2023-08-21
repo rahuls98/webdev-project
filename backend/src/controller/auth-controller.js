@@ -13,9 +13,10 @@ export const register = async (req, res) => {
                 return;
             }
             const newExpert = await Expert.createExpert(req.body);
-            newExpert.role = "Expert";
-            req.session["currentUser"] = newExpert;
-            res.json(newExpert);
+            let obj = {...newExpert};
+            let parsedObj = {...obj._doc , role : "Expert"}
+            req.session["currentUser"] = parsedObj;
+            res.json(parsedObj);
         }
 
         if (req.body.role === "User" || req.body.role === "Admin") {

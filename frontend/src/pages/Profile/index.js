@@ -5,14 +5,16 @@ import UnauthorizedMessage from "../../components/UnauthorizedMessage";
 import TopicSearch from "../../components/TopicSearch";
 import TopicChip from "../../components/TopicChip";
 import TextField from "@mui/material/TextField";
-import { useSelector } from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import VerticalSpace from "../../components/VerticalSpace";
 import VerifiedIcon from "@mui/icons-material/Verified";
 import Button from "@mui/joy/Button";
 import profileApis from "../../apis/profile";
 import MessageModalContext from "../../services/message-modal-context";
+import {updateUserThunk} from "../../services/auth-thunks";
 
 const Profile = () => {
+    const dispatch = useDispatch();
     const { currentUser } = useSelector((state) => state.user);
     const [fullname, setFullname] = useState(currentUser?.fullname);
     const [email, setEmail] = useState(currentUser?.email);
@@ -46,13 +48,14 @@ const Profile = () => {
     }, [fullname, email, topics]);
 
     const handleUpdate = async () => {
-        await profileApis.updateProfile({
+        const updatedProfile = await profileApis.updateProfile({
             ...currentUser,
             _id: currentUser._id,
             fullname: fullname,
             email: email,
             expertiseTopics: topics,
         });
+        await dispatch(updateUserThunk(updatedProfile.data));
         messageModalHandleOpen(true);
         setMessageModalContent("Updated!");
     };

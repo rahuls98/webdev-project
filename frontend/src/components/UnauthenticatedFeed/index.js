@@ -9,7 +9,7 @@ const UnauthenticatedFeed = () => {
     useEffect(() => {
         const getAllPosts = async () => {
             const posts = await postApis.getAllUnauthPosts();
-            setposts(posts);
+            setposts(posts.reverse());
         };
         if (posts.length === 0) {
             getAllPosts();

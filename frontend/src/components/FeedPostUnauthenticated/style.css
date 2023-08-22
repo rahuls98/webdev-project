@@ -27,6 +27,10 @@
     font-size: 18px;
 }
 
+.FeedPostUnauthorized_expert_name:hover {
+    cursor: pointer;
+}
+
 .FeedPostUnauthorized_expert_username {
     font-size: 15px;
     margin-left: 5px;

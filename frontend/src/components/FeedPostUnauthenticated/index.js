@@ -4,8 +4,11 @@ import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import TopicChip from "../TopicChip";
 import datetimeUtils from "../../utils/datetime";
 import Avatar from "@mui/material/Avatar";
+import { useNavigate } from "react-router";
 
 const FeedPost = (props) => {
+    const navigate = useNavigate();
+
     return (
         <div className="FeedPostUnauthorized_container">
             <div className="FeedPostUnauthorized_content">
@@ -14,7 +17,16 @@ const FeedPost = (props) => {
                         {props.post?.author.fullname[0].toUpperCase()}
                     </Avatar>
                     <div className="FeedPostUnauthorized_header_content">
-                        <span className="FeedPostUnauthorized_expert_name">
+                        <span
+                            className="FeedPostUnauthorized_expert_name"
+                            onClick={() => {
+                                window.localStorage.setItem(
+                                    "expert",
+                                    JSON.stringify(props.post?.author)
+                                );
+                                navigate("/public-profile");
+                            }}
+                        >
                             {props.post?.author.fullname}
                         </span>
                         <br />

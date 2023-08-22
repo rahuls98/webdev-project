@@ -18,6 +18,7 @@ import MessageModalContext from "./services/message-modal-context";
 import LiveStream from "./pages/LiveStream";
 import unverifiedExpertReducer from "./reducers/unverified-experts-reducer";
 import ProfilePage from "./pages/Profile";
+import ProfileView from "./pages/ProfileView";
 
 const store = configureStore({
     reducer: {
@@ -63,6 +64,10 @@ function App() {
                                 element={<AdminVerifyFeed />}
                             />
                             <Route path="/profile" element={<ProfilePage />} />
+                            <Route
+                                path="/public-profile"
+                                element={<ProfileView />}
+                            />
                         </Routes>
                     </BrowserRouter>
                 </div>

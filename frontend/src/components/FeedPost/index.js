@@ -17,6 +17,7 @@ import Avatar from "@mui/material/Avatar";
 import { useSelector } from "react-redux";
 import postApis from "../../apis/post";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { useNavigate } from "react-router";
 
 const FeedPost = (props) => {
     const { currentUser } = useSelector((state) => state.user);
@@ -32,6 +33,7 @@ const FeedPost = (props) => {
         props.post?.downvotes.length || 0
     );
     const [savedSnackbar, setSavedSnackbar] = useState(false);
+    const navigate = useNavigate();
 
     const handleSaveOnClick = async () => {
         if (!saved) {
@@ -111,7 +113,16 @@ const FeedPost = (props) => {
                         {props.post?.author.fullname[0].toUpperCase()}
                     </Avatar>
                     <div className="FeedPost_header_content">
-                        <span className="FeedPost_expert_name">
+                        <span
+                            className="FeedPost_expert_name"
+                            onClick={() => {
+                                window.localStorage.setItem(
+                                    "expert",
+                                    JSON.stringify(props.post?.author)
+                                );
+                                navigate("/public-profile");
+                            }}
+                        >
                             {props.post?.author.fullname}
                         </span>
                         <br />

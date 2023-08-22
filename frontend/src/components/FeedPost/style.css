@@ -21,10 +21,14 @@
     height: 50px;
     border-radius: 50%;
     background: gray;
-} 
+}
 
 .FeedPost_expert_name {
     font-size: 18px;
+}
+
+.FeedPost_expert_name:hover {
+    cursor: pointer;
 }
 
 .FeedPost_expert_username {
